@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: expense-tracker
-        image: stardust96/expense-tracker:fbfda4a0f9c20ea6bc05c707ac3e73e5ebdf6919
+        image: stardust96/expense-tracker:cad1ecde3fb78571b41f3671ec30e6a8203842ef
         imagePullPolicy: Always
         ports:
         - containerPort: 80
