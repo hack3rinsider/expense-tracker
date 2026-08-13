@@ -37,7 +37,7 @@
     }
     @keyframes flicker { 0% { opacity: 0.2; } 100% { opacity: 0.5; } }
     .container { max-width: 700px; margin: 0 auto; position: relative; z-index: 2; }
-    
+
     .glitch-title {
       font-family: 'Orbitron'; font-size: 1.8rem; font-weight: 900;
       text-align: center;
@@ -48,7 +48,7 @@
       letter-spacing: 2px;
     }
     .sub { text-align: center; font-size: 0.65rem; background: #0ff1; display: inline-block; width: auto; margin: 0 auto 20px; padding: 5px 15px; border-radius: 40px; border: 1px solid #0ff; }
-    
+
     .input-panel {
       background: rgba(0, 0, 0, 0.8);
       backdrop-filter: blur(16px);
@@ -80,7 +80,7 @@
       transition: 0.2s;
     }
     .cyber-input:focus { border-color: #f0f; box-shadow: 0 0 12px #f0f; }
-    
+
     .photo-options {
       display: flex;
       gap: 10px;
@@ -130,7 +130,7 @@
     .btn-danger { background: linear-gradient(95deg, #f33, #a00); border: none; }
     .import-group { display: flex; gap: 10px; margin-top: 10px; }
     .btn-half { width: 50%; }
-    
+
     /* DRAG & DROP ZONE STYLES */
     .drag-drop-zone {
       background: #0ff1;
@@ -148,7 +148,7 @@
       border-style: solid;
       transform: scale(1.01);
     }
-    
+
     .total-card {
       background: rgba(8, 8, 18, 0.75);
       backdrop-filter: blur(12px);
@@ -170,7 +170,7 @@
       text-shadow: 0 0 8px #0ff;
       color: #fff;
     }
-    
+
     .section-title {
       font-family: 'Orbitron';
       font-size: 1rem;
@@ -200,7 +200,7 @@
     .mini-btn { background: transparent; border: 1px solid #0ff; border-radius: 40px; padding: 6px; font-size: 0.65rem; flex: 1; cursor: pointer; color: #0ff; transition: 0.1s; }
     .mini-btn:hover { background: #0ff2; }
     .del-btn { border-color: #ff3366; color: #ff3366; }
-    
+
     .person-grid {
       display: flex;
       flex-wrap: wrap;
@@ -215,7 +215,7 @@
       font-size: 0.75rem;
     }
     .person-card span { color: #f0f; font-weight: bold; font-size: 0.9rem; }
-    
+
     .settlement-list {
       background: #ff00cc10;
       border-radius: 20px;
@@ -228,7 +228,7 @@
       margin: 6px 0;
       font-size: 0.75rem;
     }
-    
+
     .search-box {
       width: 100%;
       background: #010118;
@@ -240,7 +240,7 @@
       font-family: 'Share Tech Mono';
     }
     .search-box:focus { outline: none; border-color: #0ff; box-shadow: 0 0 8px #0ff; }
-    
+
     .modal {
       display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
       background: rgba(0,0,0,0.96); backdrop-filter: blur(20px); z-index: 9999;
@@ -251,10 +251,10 @@
     .modal-details { margin: 15px 0; text-align: left; font-size: 0.85rem; line-height: 1.8; }
     footer { text-align: center; font-size: 0.55rem; margin-top: 15px; opacity: 0.6; }
     .warning-badge { font-size: 0.6rem; color: #f0f; margin-top: 5px; text-align: center; }
-    .success-toast { 
-      position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); 
-      background: #0ff; color: #000; padding: 10px 20px; border-radius: 40px; 
-      font-weight: bold; z-index: 10000; font-family: 'Orbitron'; font-size: 0.8rem; 
+    .success-toast {
+      position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
+      background: #0ff; color: #000; padding: 10px 20px; border-radius: 40px;
+      font-weight: bold; z-index: 10000; font-family: 'Orbitron'; font-size: 0.8rem;
       animation: fadeOut 2.5s forwards; pointer-events: none; white-space: nowrap;
       box-shadow: 0 0 15px #0ff;
     }
@@ -263,8 +263,8 @@
       color: #fff !important;
       box-shadow: 0 0 15px #f33 !important;
     }
-    @keyframes fadeOut { 0% { opacity: 1; transform: translateX(-50%) translateY(0); } 
-                         80% { opacity: 1; } 
+    @keyframes fadeOut { 0% { opacity: 1; transform: translateX(-50%) translateY(0); }
+                         80% { opacity: 1; }
                          100% { opacity: 0; transform: translateX(-50%) translateY(-20px); visibility: hidden; } }
     .image-preview-img {
       max-width: 100%;
@@ -273,7 +273,8 @@
       margin-top: 8px;
       border: 1px solid #0ff;
     }
-    
+
+    .image-preview-img {
       background: #333;
       color: #fff;
     }
@@ -291,28 +292,28 @@
     <input type="number" id="expenseAmount" class="cyber-input" placeholder="💰 AMOUNT (₹)" autocomplete="off" step="0.01">
     <input type="text" id="expenseNote" class="cyber-input" placeholder="📝 NOTE / ITEM" autocomplete="off">
     <input type="text" id="expenseLocation" class="cyber-input" placeholder="📍 LOCATION" autocomplete="off">
-    
+
     <div class="photo-options"><div id="galleryBtn" class="photo-btn"><i class="fas fa-image"></i> 🖼️ CHOOSE FILE</div>
     </div>
     <input type="file" id="receiptUpload" accept="image/jpeg,image/png,image/webp,image/gif" style="display: none;">
     <div id="imagePreview" style="margin-top: 8px; font-size: 0.7rem; color: #0ff;"></div>
-    
+
     <button id="saveBtn" class="btn-neon"><i class="fas fa-save"></i> SAVE EXPENSE</button>
-    
+
     <div class="import-group">
       <button id="exportCsvBtn" class="btn-neon btn-outline btn-half"><i class="fas fa-download"></i> EXPORT CSV</button>
       <div id="importCsvBtn" class="btn-neon btn-outline btn-half" style="cursor: pointer;"><i class="fas fa-upload"></i> IMPORT CSV (DRAG & DROP)</div>
     </div>
-    
+
     <!-- DRAG & DROP ZONE -->
     <div id="dragDropZone" class="drag-drop-zone">
       <i class="fas fa-cloud-upload-alt"></i> 📂 DRAG & DROP CSV FILE HERE<br>
       <small style="opacity:0.7;">or click above button to select file</small>
     </div>
-    
+
     <button id="clearAllBtn" class="btn-neon btn-danger" style="margin-top: 10px;"><i class="fas fa-trash-alt"></i> 🗑️ CLEAR ALL DATA</button>
     <input type="file" id="csvImportFile" accept=".csv" style="display: none;">
-    <div class="warning-badge"><i class="fas fa-info-circle"></i> 📌 Latest expenses appear on TOP | Drag & Drop CSV file directly | Time stamps preserved</div>
+    <div class="warning-badge"><i class="fas fa-info-circle"></i> 📌 Latest expenses appear on TOP | Drag & Drop CSV file directly | Time stamps preserved | Images included in CSV</div>
   </div>
 
   <div class="total-card">
@@ -409,11 +410,8 @@
   const fileInput = document.getElementById('receiptUpload');
   const imagePreviewDiv = document.getElementById('imagePreview');
 
-
-
-
   galleryBtn.addEventListener('click', () => fileInput.click());
-  
+
   fileInput.addEventListener('change', async (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -492,7 +490,7 @@
     const personMap = getPersonTotals();
     for (let val of personMap.values()) total += val;
     document.getElementById("globalTotal").innerText = total.toFixed(2);
-    
+
     let personsHtml = "";
     if (personMap.size === 0) personsHtml = "<span style='color:#aaa;'>— no expenses —</span>";
     else {
@@ -501,13 +499,13 @@
       }
     }
     document.getElementById("personTotalsList").innerHTML = personsHtml;
-    
+
     const settlements = getSettlement();
     let settlementHtml = "";
     if (settlements.length === 0 && personMap.size > 0 && total > 0) {
       settlementHtml = '<div class="debt-row" style="border-left-color:#0ff;">✨ ALL SETTLED ✨</div>';
     } else if (settlements.length > 0) {
-      settlementHtml = settlements.map(s => 
+      settlementHtml = settlements.map(s =>
         `<div class="debt-row"><i class="fas fa-arrow-right"></i> ${escapeHtml(s.from)} → ${escapeHtml(s.to)} : <strong style="color:#0ff;">₹${s.amount.toFixed(2)}</strong></div>`
       ).join('');
     } else {
@@ -520,7 +518,7 @@
     const modal = document.getElementById("receiptModal");
     const modalImg = document.getElementById("modalImg");
     const modalDetails = document.getElementById("modalDetails");
-    
+
     if (exp.image && exp.image.startsWith("data:image")) {
       modalImg.src = exp.image;
       modalImg.style.display = "block";
@@ -528,7 +526,7 @@
       modalImg.src = "";
       modalImg.style.display = "none";
     }
-    
+
     modalDetails.innerHTML = `
       <div style="border-bottom:1px solid #0ff; padding-bottom:8px; margin-bottom:8px;">
         <strong style="color:#0ff; font-size:1.2rem;">₹${parseFloat(exp.amount).toFixed(2)}</strong>
@@ -549,20 +547,20 @@
       e.note.toLowerCase().includes(searchTerm) ||
       e.location.toLowerCase().includes(searchTerm)
     );
-    
+
     // Sort by time - NEWEST FIRST (most recent at top)
     filtered.sort((a, b) => {
       const timeA = new Date(a.time);
       const timeB = new Date(b.time);
       return timeB - timeA;
     });
-    
+
     const container = document.getElementById("expensesContainer");
     if (filtered.length === 0) {
       container.innerHTML = `<div style="text-align:center;padding:30px;background:#0f0f1a;border-radius:20px;">🌀 NO EXPENSES YET 🌀</div>`;
       return;
     }
-    
+
     container.innerHTML = "";
     for (let exp of filtered) {
       const card = document.createElement("div");
@@ -583,7 +581,7 @@
           <button class="mini-btn del-btn delete-btn" data-id="${exp.id}">🗑️ DELETE</button>
         </div>
       `;
-      
+
       card.querySelector(".edit-btn").addEventListener("click", (e) => {
         e.stopPropagation();
         startEdit(exp.id);
@@ -651,7 +649,7 @@
       expenses.unshift({ id: newId, person, amount, note, location, image: imageData, time: now });
       showToast("✅ Expense saved!");
     }
-    
+
     document.getElementById("personName").value = "";
     document.getElementById("expenseAmount").value = "";
     document.getElementById("expenseNote").value = "";
@@ -659,35 +657,35 @@
     fileInput.value = "";
     pendingImage = null;
     imagePreviewDiv.innerHTML = "";
-    
+
     saveAll();
   }
 
-  // ========== CSV IMPORT with LATEST FIRST (preserving original order) ==========
+  // ========== CSV IMPORT with LATEST FIRST and IMAGES ==========
   function importFromCSV(file) {
     if (file.size > 100 * 1024 * 1024) {
       showToast("File too large! Max 100MB", true);
       return;
     }
-    
+
     const reader = new FileReader();
     reader.onload = function(e) {
       const content = e.target.result;
       const lines = content.split(/\r?\n/);
-      let importedExpenses = []; // Temporary array to collect new expenses
+      let importedExpenses = [];
       let skippedCount = 0;
-      
+
       for (let i = 0; i < lines.length; i++) {
         let line = lines[i].trim();
         if (line === "") continue;
-        
+
         // Skip header rows and summary sections
-        if (line.toLowerCase().includes("person") && line.toLowerCase().includes("amount")) continue;
+        if (line.toLowerCase().includes("person") && line.toLowerCase().includes("amount") && line.toLowerCase().includes("note")) continue;
         if (line.startsWith("===")) continue;
         if (line.startsWith("GRAND")) continue;
         if (line.startsWith("From")) continue;
         if (line.startsWith("Total")) continue;
-        
+
         // Parse CSV respecting quotes
         let parts = [];
         let inQuote = false;
@@ -705,25 +703,26 @@
           current += ch;
         }
         parts.push(current.trim());
-        
+
         parts = parts.map(p => p.replace(/^"|"$/g, ''));
-        
-        if (parts.length < 4) {
+
+        if (parts.length < 5) {
           skippedCount++;
           continue;
         }
-        
+
         let person = parts[0] || "";
         let amount = parseFloat(parts[1]);
         let note = parts[2] || "";
         let location = parts[3] || "";
-        let time = (parts.length > 4 && parts[4] && parts[4].trim() !== "") ? parts[4].trim() : new Date().toLocaleString();
-        
+        let time = (parts[4] && parts[4].trim() !== "") ? parts[4].trim() : new Date().toLocaleString();
+        let image = (parts.length > 5 && parts[5] && parts[5].trim() !== "") ? parts[5].trim() : null;
+
         if (!person || isNaN(amount) || amount <= 0 || !note || !location) {
           skippedCount++;
           continue;
         }
-        
+
         const newId = Date.now() + importedExpenses.length + Math.random() * 10000;
         importedExpenses.push({
           id: newId,
@@ -731,25 +730,25 @@
           amount: amount,
           note: note,
           location: location,
-          image: null,
+          image: image || null,
           time: time
         });
       }
-      
+
       // Sort imported expenses by time (NEWEST FIRST)
       importedExpenses.sort((a, b) => {
         const timeA = new Date(a.time);
         const timeB = new Date(b.time);
         return timeB - timeA;
       });
-      
+
       // Add to existing expenses (newest at top)
       expenses = [...importedExpenses, ...expenses];
-      
+
       saveAll();
       showToast(`✅ CSV Imported: ${importedExpenses.length} expenses added (latest first)! Skipped: ${skippedCount}`);
     };
-    
+
     reader.onerror = () => showToast("CSV read error", true);
     reader.readAsText(file, "UTF-8");
   }
@@ -758,12 +757,12 @@
   const dragDropZone = document.getElementById('dragDropZone');
   const importBtn = document.getElementById('importCsvBtn');
   const csvFileInput = document.getElementById('csvImportFile');
-  
+
   // Click on import button triggers file selection
   importBtn.addEventListener('click', () => {
     csvFileInput.click();
   });
-  
+
   // File selection via input
   csvFileInput.addEventListener('change', (e) => {
     if (e.target.files.length) {
@@ -771,22 +770,22 @@
     }
     csvFileInput.value = "";
   });
-  
+
   // DRAG & DROP EVENT LISTENERS
   dragDropZone.addEventListener('dragover', (e) => {
     e.preventDefault();
     dragDropZone.classList.add('drag-over');
   });
-  
+
   dragDropZone.addEventListener('dragleave', (e) => {
     e.preventDefault();
     dragDropZone.classList.remove('drag-over');
   });
-  
+
   dragDropZone.addEventListener('drop', (e) => {
     e.preventDefault();
     dragDropZone.classList.remove('drag-over');
-    
+
     const files = e.dataTransfer.files;
     if (files.length > 0) {
       const file = files[0];
@@ -798,24 +797,30 @@
     }
   });
 
-  // ========== CSV EXPORT ==========
+  // ========== CSV EXPORT with IMAGES ==========
   function exportCompleteCSV() {
     if (expenses.length === 0) {
       showToast("No data to export", true);
       return;
     }
-    
-    let csvRows = [["Person", "Amount (₹)", "Note", "Location", "Time"]];
+
+    let csvRows = [["Person", "Amount (₹)", "Note", "Location", "Time", "Image"]];
+
+    // Export all expenses with their images
     for (let e of expenses) {
+      let imageData = e.image || "";
+      // If image is a data URL, keep it as is
+      // If it's too long, we still include it (it will be a very large CSV)
       csvRows.push([
         `"${e.person.replace(/"/g, '""')}"`,
         e.amount,
         `"${e.note.replace(/"/g, '""')}"`,
         `"${e.location.replace(/"/g, '""')}"`,
-        `"${(e.time || "").replace(/"/g, '""')}"`
+        `"${(e.time || "").replace(/"/g, '""')}"`,
+        `"${imageData.replace(/"/g, '""')}"`
       ]);
     }
-    
+
     csvRows.push([""]);
     csvRows.push(["=== PERSON WISE TOTALS ==="]);
     csvRows.push(["Person", "Total Amount (₹)"]);
@@ -826,7 +831,7 @@
       grandTotal += total;
     }
     csvRows.push(["GRAND TOTAL", grandTotal.toFixed(2)]);
-    
+
     csvRows.push([""]);
     csvRows.push(["=== SETTLEMENT ==="]);
     csvRows.push(["From (Payer)", "To (Receiver)", "Amount (₹)"]);
@@ -838,13 +843,13 @@
         csvRows.push([`"${s.from.replace(/"/g, '""')}"`, `"${s.to.replace(/"/g, '""')}"`, s.amount.toFixed(2)]);
       }
     }
-    
+
     csvRows.push([""]);
     csvRows.push(["=== SUMMARY ==="]);
     csvRows.push(["Total Expenses", "Number of People", "Equal Share Per Person"]);
     const peopleCount = personTotals.size;
     csvRows.push([grandTotal.toFixed(2), peopleCount, peopleCount > 0 ? (grandTotal / peopleCount).toFixed(2) : 0]);
-    
+
     const csvContent = csvRows.map(row => row.join(",")).join("\n");
     const blob = new Blob(["\uFEFF" + csvContent], { type: "text/csv;charset=utf-8;" });
     const link = document.createElement("a");
@@ -855,7 +860,7 @@
     link.click();
     document.body.removeChild(link);
     URL.revokeObjectURL(url);
-    showToast("✅ CSV Exported!");
+    showToast("✅ CSV Exported with images!");
   }
 
   function saveAll() {
@@ -887,7 +892,7 @@
 
   renderStats();
   renderExpenses();
-  console.log("App ready - Drag & Drop CSV | Latest First | Time preserved");
+  console.log("App ready - Drag & Drop CSV | Latest First | Images included in CSV");
 </script>
 </body>
 </html>
