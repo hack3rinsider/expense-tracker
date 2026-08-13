@@ -274,6 +274,43 @@
       border: 1px solid #0ff;
     }
     
+    .camera-modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: #000;
+      z-index: 20000;
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    .camera-modal.active {
+      display: flex;
+    }
+    #cameraVideo {
+      width: 100%;
+      max-height: 70vh;
+      background: #000;
+      object-fit: cover;
+    }
+    .camera-controls {
+      display: flex;
+      gap: 20px;
+      margin-top: 20px;
+    }
+    .capture-btn {
+      background: #f0f;
+      border: none;
+      border-radius: 60px;
+      padding: 15px 30px;
+      font-family: 'Orbitron';
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .close-camera {
       background: #333;
       color: #fff;
     }
@@ -292,7 +329,9 @@
     <input type="text" id="expenseNote" class="cyber-input" placeholder="📝 NOTE / ITEM" autocomplete="off">
     <input type="text" id="expenseLocation" class="cyber-input" placeholder="📍 LOCATION" autocomplete="off">
     
-    <div class="photo-options"><div id="galleryBtn" class="photo-btn"><i class="fas fa-image"></i> 🖼️ CHOOSE FILE</div>
+    <div class="photo-options">
+      <div id="cameraBtn" class="photo-btn"><i class="fas fa-camera"></i> 📸 OPEN CAMERA</div>
+      <div id="galleryBtn" class="photo-btn"><i class="fas fa-image"></i> 🖼️ CHOOSE FILE</div>
     </div>
     <input type="file" id="receiptUpload" accept="image/jpeg,image/png,image/webp,image/gif" style="display: none;">
     <div id="imagePreview" style="margin-top: 8px; font-size: 0.7rem; color: #0ff;"></div>
@@ -334,6 +373,13 @@
   <footer>⚡ Click any expense | Drag & Drop CSV | Latest entries show on TOP</footer>
 </div>
 
+<!-- Camera Modal -->
+<div id="cameraModal" class="camera-modal">
+  <video id="cameraVideo" autoplay playsinline></video>
+  <div class="camera-controls">
+    <button id="capturePhotoBtn" class="capture-btn"><i class="fas fa-camera"></i> CAPTURE</button>
+    <button id="closeCameraBtn" class="capture-btn close-camera"><i class="fas fa-times"></i> CLOSE</button>
+  </div>
 </div>
 
 <!-- Receipt Modal -->
@@ -352,6 +398,7 @@
   let expenses = [];
   let editId = null;
   let pendingImage = null;
+  let cameraStream = null;
 
   // Load data
   try {
@@ -404,13 +451,65 @@
     });
   }
 
-  // ========== IMAGE UPLOAD ==========
+  // ========== CAMERA ==========
+  const cameraModal = document.getElementById('cameraModal');
+  const cameraVideo = document.getElementById('cameraVideo');
+  const captureBtn = document.getElementById('capturePhotoBtn');
+  const closeCameraBtn = document.getElementById('closeCameraBtn');
+  const cameraBtn = document.getElementById('cameraBtn');
   const galleryBtn = document.getElementById('galleryBtn');
   const fileInput = document.getElementById('receiptUpload');
   const imagePreviewDiv = document.getElementById('imagePreview');
 
+  async function openCamera() {
+    try {
+      cameraModal.classList.add('active');
+      cameraStream = await navigator.mediaDevices.getUserMedia({ video: true });
+      cameraVideo.srcObject = cameraStream;
+    } catch(err) {
+      showToast("Camera access denied", true);
+      cameraModal.classList.remove('active');
+    }
+  }
 
+  function closeCamera() {
+    if (cameraStream) {
+      cameraStream.getTracks().forEach(track => track.stop());
+      cameraStream = null;
+    }
+    cameraVideo.srcObject = null;
+    cameraModal.classList.remove('active');
+  }
 
+  async function capturePhoto() {
+    const canvas = document.createElement('canvas');
+    canvas.width = cameraVideo.videoWidth;
+    canvas.height = cameraVideo.videoHeight;
+    const ctx = canvas.getContext('2d');
+    ctx.drawImage(cameraVideo, 0, 0, canvas.width, canvas.height);
+    
+    canvas.toBlob(async (blob) => {
+      const file = new File([blob], "camera_photo.jpg", { type: "image/jpeg" });
+      try {
+        showToast("📸 Compressing...", false);
+        const compressedBase64 = await compressImage(file, 0.6);
+        pendingImage = compressedBase64;
+        imagePreviewDiv.innerHTML = `<i class="fas fa-check-circle"></i> ✅ Photo captured & compressed!`;
+        const img = document.createElement("img");
+        img.src = compressedBase64;
+        img.className = "image-preview-img";
+        imagePreviewDiv.appendChild(img);
+        showToast("✅ Photo ready!");
+        closeCamera();
+      } catch(err) {
+        showToast("Compression failed", true);
+      }
+    }, 'image/jpeg', 0.8);
+  }
+
+  cameraBtn.addEventListener('click', openCamera);
+  captureBtn.addEventListener('click', capturePhoto);
+  closeCameraBtn.addEventListener('click', closeCamera);
 
   galleryBtn.addEventListener('click', () => fileInput.click());
   
