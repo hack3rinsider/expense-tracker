@@ -3,896 +3,2227 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-  <title>⚡ TRIP SPLIT • ULTIMATE TRIP LEDGER ⚡</title>
+  <title>⚡ CYBERSPLIT • NEON TRIP LEDGER ⚡</title>
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
+    /* ===== RESET & BASE ===== */
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    body {
-      background: #0a0a0f;
-      font-family: 'Share Tech Mono', monospace;
-      color: #ccf;
-      padding: 14px;
-      min-height: 100vh;
+    
+    :root {
+      --neon-cyan: #00f0ff;
+      --neon-magenta: #ff00e6;
+      --neon-purple: #8b00ff;
+      --neon-pink: #ff0066;
+      --neon-green: #00ff88;
+      --neon-orange: #ff6600;
+      --neon-yellow: #ffee00;
+      --dark-bg: #05050a;
+      --panel-bg: rgba(5, 5, 10, 0.92);
+      --text-primary: #e0e8ff;
+      --text-secondary: #a0b0d0;
+      --text-dim: #6070a0;
     }
-    body::before {
-      content: '';
+
+    body {
+      background: var(--dark-bg);
+      font-family: 'Share Tech Mono', monospace;
+      color: var(--text-primary);
+      min-height: 100vh;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* ===== ANIMATED GRADIENT BACKGROUND ===== */
+    .gradient-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -2;
+      background: linear-gradient(135deg, #05050a 0%, #0a0a1e 25%, #150a2a 50%, #0a1a2a 75%, #05050a 100%);
+      background-size: 400% 400%;
+      animation: gradientBG 15s ease-in-out infinite;
+    }
+
+    @keyframes gradientBG {
+      0% { background-position: 0% 50%; }
+      25% { background-position: 50% 0%; }
+      50% { background-position: 100% 50%; }
+      75% { background-position: 50% 100%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* ===== PARTICLE CANVAS ===== */
+    #particleCanvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    /* ===== CYBER GRID ===== */
+    .cyber-grid {
       position: fixed;
       top: 0; left: 0;
       width: 100%; height: 100%;
-      background: radial-gradient(circle at 20% 30%, #0ff1, transparent 50%),
-                  radial-gradient(circle at 85% 70%, #f0f1, transparent 50%),
-                  repeating-linear-gradient(0deg, #0ff0 1px, transparent 1px, transparent 30px);
-      background-size: 100% 100%, 100% 100%, 30px 30px;
-      animation: drift 25s linear infinite;
-      z-index: -2;
+      background: 
+        linear-gradient(rgba(0, 240, 255, 0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 240, 255, 0.05) 1px, transparent 1px);
+      background-size: 60px 60px;
+      z-index: -1;
+      animation: gridPulse 8s ease-in-out infinite;
+    }
+
+    @keyframes gridPulse {
+      0%, 100% { opacity: 0.3; }
+      50% { opacity: 0.7; }
+    }
+
+    /* ===== FLOATING ORBS ===== */
+    .cyber-orb {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(120px);
+      z-index: -1;
+      pointer-events: none;
+      animation: orbFloat 15s ease-in-out infinite;
+    }
+
+    .cyber-orb:nth-child(1) {
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(0, 240, 255, 0.15), transparent 70%);
+      top: -200px;
+      left: -200px;
+      animation-delay: 0s;
+    }
+
+    .cyber-orb:nth-child(2) {
+      width: 700px;
+      height: 700px;
+      background: radial-gradient(circle, rgba(255, 0, 230, 0.12), transparent 70%);
+      bottom: -250px;
+      right: -250px;
+      animation-delay: -5s;
+    }
+
+    .cyber-orb:nth-child(3) {
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, rgba(139, 0, 255, 0.10), transparent 70%);
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      animation-delay: -10s;
+    }
+
+    .cyber-orb:nth-child(4) {
+      width: 400px;
+      height: 400px;
+      background: radial-gradient(circle, rgba(0, 255, 136, 0.08), transparent 70%);
+      top: 20%;
+      right: 10%;
+      animation-delay: -3s;
+    }
+
+    .cyber-orb:nth-child(5) {
+      width: 350px;
+      height: 350px;
+      background: radial-gradient(circle, rgba(255, 102, 0, 0.08), transparent 70%);
+      bottom: 20%;
+      left: 10%;
+      animation-delay: -7s;
+    }
+
+    @keyframes orbFloat {
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      20% { transform: translate(60px, -40px) scale(1.1); }
+      40% { transform: translate(-30px, 60px) scale(0.9); }
+      60% { transform: translate(40px, 30px) scale(1.05); }
+      80% { transform: translate(-50px, -20px) scale(0.95); }
+    }
+
+    /* ===== SCANLINES & VIGNETTE ===== */
+    .scanlines {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: repeating-linear-gradient(
+        0deg,
+        transparent 0px,
+        transparent 2px,
+        rgba(0, 240, 255, 0.02) 2px,
+        rgba(255, 0, 230, 0.02) 3px,
+        transparent 3px,
+        transparent 5px
+      );
+      pointer-events: none;
+      z-index: 999;
+      animation: scanMove 12s linear infinite;
+    }
+
+    @keyframes scanMove {
+      0% { background-position: 0 0; }
+      100% { background-position: 0 100%; }
+    }
+
+    .vignette {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: radial-gradient(ellipse at center, transparent 40%, rgba(0,0,0,0.6) 100%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ===== CONTAINER ===== */
+    .container {
+      max-width: 950px;
+      margin: 0 auto;
+      padding: 15px;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ===== HEADER ===== */
+    .glitch-title {
+      font-family: 'Orbitron';
+      font-size: clamp(2rem, 5vw, 4rem);
+      font-weight: 900;
+      text-align: center;
+      background: linear-gradient(135deg, var(--neon-cyan), var(--neon-magenta), var(--neon-purple), var(--neon-cyan), var(--neon-magenta));
+      background-size: 400% 400%;
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      text-shadow: none;
+      position: relative;
+      letter-spacing: 6px;
+      animation: titleGlitch 5s infinite, gradientMove 4s ease-in-out infinite;
+      margin-bottom: 5px;
+      filter: drop-shadow(0 0 40px rgba(0, 240, 255, 0.3));
+    }
+
+    @keyframes gradientMove {
+      0%, 100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+    }
+
+    @keyframes titleGlitch {
+      0%, 85%, 100% { transform: translate(0); }
+      87% { transform: translate(-4px, 4px); }
+      89% { transform: translate(4px, -4px); }
+      91% { transform: translate(-2px, 2px); }
+    }
+
+    .glitch-title::after {
+      content: '⚡ CYBERSPLIT ⚡';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, var(--neon-cyan), var(--neon-magenta), var(--neon-purple));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      opacity: 0.15;
+      clip-path: inset(20% 0 60% 0);
+      animation: glitchSlice 5s infinite;
+    }
+
+    @keyframes glitchSlice {
+      0%, 85%, 100% { transform: translate(0); }
+      87% { transform: translate(-5px, 0); }
+      89% { transform: translate(5px, 0); }
+    }
+
+    .sub-header {
+      text-align: center;
+      font-size: clamp(0.7rem, 1.2vw, 0.85rem);
+      background: rgba(0, 240, 255, 0.08);
+      border: 1px solid rgba(0, 240, 255, 0.3);
+      display: inline-block;
+      width: auto;
+      margin: 0 auto 20px;
+      padding: 8px 30px;
+      border-radius: 40px;
+      color: var(--neon-cyan);
+      letter-spacing: 3px;
+      box-shadow: 0 0 40px rgba(0, 240, 255, 0.1), inset 0 0 40px rgba(0, 240, 255, 0.05);
+      backdrop-filter: blur(10px);
+      position: relative;
+      left: 50%;
+      transform: translateX(-50%);
+      animation: subPulse 3s ease-in-out infinite;
+      font-weight: 600;
+    }
+
+    @keyframes subPulse {
+      0%, 100% { border-color: rgba(0, 240, 255, 0.3); box-shadow: 0 0 30px rgba(0, 240, 255, 0.1); }
+      33% { border-color: rgba(255, 0, 230, 0.4); box-shadow: 0 0 50px rgba(255, 0, 230, 0.15); }
+      66% { border-color: rgba(139, 0, 255, 0.4); box-shadow: 0 0 50px rgba(139, 0, 255, 0.15); }
+    }
+
+    /* ===== PANELS ===== */
+    .panel {
+      background: var(--panel-bg);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(0, 240, 255, 0.15);
+      border-radius: 24px;
+      padding: 22px 20px;
+      margin-bottom: 25px;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.4s ease;
+      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+    }
+
+    .panel::before {
+      content: '';
+      position: absolute;
+      top: -2px;
+      left: -2px;
+      right: -2px;
+      bottom: -2px;
+      border-radius: 26px;
+      background: linear-gradient(45deg, var(--neon-cyan), var(--neon-magenta), var(--neon-purple), var(--neon-cyan));
+      background-size: 300% 300%;
+      z-index: -1;
+      opacity: 0.25;
+      animation: borderGlow 4s ease-in-out infinite;
+    }
+
+    @keyframes borderGlow {
+      0%, 100% { background-position: 0% 50%; opacity: 0.2; }
+      33% { background-position: 100% 50%; opacity: 0.4; }
+      66% { background-position: 50% 100%; opacity: 0.3; }
+    }
+
+    .panel::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      border-radius: 24px;
+      background: linear-gradient(135deg, rgba(0, 240, 255, 0.03), rgba(255, 0, 230, 0.03), rgba(139, 0, 255, 0.03));
       pointer-events: none;
     }
-    @keyframes drift { 0% { background-position: 0 0, 0 0, 0 0; } 100% { background-position: 0 0, 0 0, 60px 60px; } }
-    .scanline {
-      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-      background: repeating-linear-gradient(0deg, #0ff1 0px, #f0f1 2px, transparent 2px, transparent 6px);
-      pointer-events: none; z-index: 999; opacity: 0.3;
-      animation: flicker 0.15s infinite;
-    }
-    @keyframes flicker { 0% { opacity: 0.2; } 100% { opacity: 0.5; } }
-    .container { max-width: 700px; margin: 0 auto; position: relative; z-index: 2; }
 
-    .glitch-title {
-      font-family: 'Orbitron'; font-size: 1.8rem; font-weight: 900;
-      text-align: center;
-      background: linear-gradient(135deg, #0ff, #f0f);
-      -webkit-background-clip: text; background-clip: text; color: transparent;
-      text-shadow: 0 0 5px #0ff;
-      margin-bottom: 5px;
-      letter-spacing: 2px;
+    .panel:hover {
+      border-color: rgba(0, 240, 255, 0.4);
+      transform: translateY(-3px);
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5), 0 0 50px rgba(0, 240, 255, 0.08);
     }
-    .sub { text-align: center; font-size: 0.65rem; background: #0ff1; display: inline-block; width: auto; margin: 0 auto 20px; padding: 5px 15px; border-radius: 40px; border: 1px solid #0ff; }
 
-    .input-panel {
-      background: rgba(0, 0, 0, 0.8);
-      backdrop-filter: blur(16px);
-      border: 2px solid #0ff;
-      border-radius: 28px;
-      padding: 22px 18px;
-      margin-bottom: 25px;
-      box-shadow: 0 0 20px #0ff3;
-    }
-    .input-title {
+    .panel-title {
       font-family: 'Orbitron';
-      font-size: 1rem;
-      color: #0ff;
+      font-size: clamp(0.9rem, 1.5vw, 1.1rem);
+      color: var(--neon-cyan);
       text-align: center;
       margin-bottom: 18px;
-      letter-spacing: 2px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      animation: titlePulse 3s ease-in-out infinite;
+      font-weight: 700;
+      text-shadow: 0 0 30px rgba(0, 240, 255, 0.2);
     }
+
+    @keyframes titlePulse {
+      0%, 100% { text-shadow: 0 0 30px rgba(0, 240, 255, 0.2); }
+      33% { text-shadow: 0 0 50px rgba(255, 0, 230, 0.3); }
+      66% { text-shadow: 0 0 50px rgba(139, 0, 255, 0.3); }
+    }
+
+    /* ===== INPUTS ===== */
     .cyber-input {
       width: 100%;
-      background: #010118;
-      border: 1px solid #0ff;
+      background: rgba(0, 240, 255, 0.04);
+      border: 1px solid rgba(0, 240, 255, 0.15);
       border-radius: 60px;
-      padding: 14px 18px;
+      padding: 14px 22px;
       margin-bottom: 12px;
-      color: #0ff;
+      color: var(--text-primary);
       font-family: 'Share Tech Mono';
-      font-size: 0.9rem;
+      font-size: clamp(0.85rem, 1vw, 0.95rem);
       outline: none;
-      transition: 0.2s;
+      transition: all 0.4s ease;
+      box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.3);
     }
-    .cyber-input:focus { border-color: #f0f; box-shadow: 0 0 12px #f0f; }
 
+    .cyber-input::placeholder {
+      color: rgba(200, 208, 224, 0.3);
+      font-size: clamp(0.8rem, 1vw, 0.9rem);
+    }
+
+    .cyber-input:focus {
+      border-color: var(--neon-cyan);
+      box-shadow: 0 0 50px rgba(0, 240, 255, 0.12), inset 0 0 50px rgba(0, 240, 255, 0.05);
+      background: rgba(0, 240, 255, 0.06);
+      transform: scale(1.01);
+    }
+
+    /* ===== BUTTONS ===== */
+    .btn-neon {
+      background: linear-gradient(135deg, var(--neon-cyan), var(--neon-magenta));
+      background-size: 200% 200%;
+      border: none;
+      border-radius: 60px;
+      padding: 14px;
+      font-family: 'Orbitron';
+      font-weight: 700;
+      font-size: clamp(0.75rem, 1vw, 0.9rem);
+      width: 100%;
+      margin-top: 8px;
+      cursor: pointer;
+      color: #fff;
+      transition: all 0.4s ease;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      position: relative;
+      overflow: hidden;
+      text-shadow: 0 0 30px rgba(255, 255, 255, 0.3);
+      animation: btnGradient 3s ease-in-out infinite;
+    }
+
+    @keyframes btnGradient {
+      0%, 100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+    }
+
+    .btn-neon::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(255,255,255,0.15) 0%, transparent 60%);
+      animation: btnShine 4s infinite;
+    }
+
+    @keyframes btnShine {
+      0%, 100% { transform: translate(-30%, -30%); }
+      50% { transform: translate(30%, 30%); }
+    }
+
+    .btn-neon:hover {
+      transform: scale(1.03);
+      box-shadow: 0 0 60px rgba(0, 240, 255, 0.25), 0 0 100px rgba(255, 0, 230, 0.15);
+    }
+
+    .btn-neon:active {
+      transform: scale(0.95);
+    }
+
+    .btn-outline {
+      background: transparent;
+      border: 1px solid var(--neon-cyan);
+      color: var(--neon-cyan);
+      animation: none;
+    }
+
+    .btn-outline:hover {
+      background: rgba(0, 240, 255, 0.08);
+      border-color: var(--neon-magenta);
+      box-shadow: 0 0 40px rgba(0, 240, 255, 0.15);
+      color: #fff;
+    }
+
+    .btn-danger {
+      background: linear-gradient(135deg, #ff0066, #cc0033);
+      animation: none;
+    }
+
+    .btn-danger:hover {
+      box-shadow: 0 0 50px rgba(255, 0, 102, 0.3);
+    }
+
+    .btn-small {
+      padding: 10px 18px;
+      font-size: clamp(0.7rem, 0.8vw, 0.8rem);
+      border-radius: 60px;
+      border: 1px solid rgba(0, 240, 255, 0.2);
+      background: rgba(0, 240, 255, 0.04);
+      color: var(--neon-cyan);
+      cursor: pointer;
+      font-family: 'Share Tech Mono';
+      transition: all 0.3s ease;
+      white-space: nowrap;
+      font-weight: 600;
+    }
+
+    .btn-small:hover {
+      background: rgba(0, 240, 255, 0.08);
+      border-color: var(--neon-cyan);
+      box-shadow: 0 0 30px rgba(0, 240, 255, 0.1);
+      transform: scale(1.05);
+    }
+
+    .btn-small-danger {
+      border-color: rgba(255, 0, 102, 0.2);
+      color: var(--neon-pink);
+    }
+
+    .btn-small-danger:hover {
+      background: rgba(255, 0, 102, 0.08);
+      border-color: var(--neon-pink);
+      box-shadow: 0 0 30px rgba(255, 0, 102, 0.1);
+    }
+
+    /* ===== TRIP MANAGEMENT ===== */
+    .trip-header {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      margin-bottom: 15px;
+      flex-wrap: wrap;
+    }
+
+    .trip-select {
+      flex: 1;
+      background: rgba(0, 240, 255, 0.04);
+      border: 1px solid rgba(0, 240, 255, 0.15);
+      border-radius: 60px;
+      padding: 10px 18px;
+      color: var(--text-primary);
+      font-family: 'Share Tech Mono';
+      font-size: clamp(0.8rem, 0.9vw, 0.9rem);
+      outline: none;
+      cursor: pointer;
+      min-width: 120px;
+      transition: all 0.3s ease;
+      box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.3);
+    }
+
+    .trip-select:focus {
+      border-color: var(--neon-cyan);
+      box-shadow: 0 0 40px rgba(0, 240, 255, 0.08), inset 0 0 40px rgba(0, 240, 255, 0.03);
+    }
+
+    .trip-select option {
+      background: #0a0a1a;
+      color: var(--text-primary);
+    }
+
+    .trip-history {
+      margin-top: 10px;
+      max-height: 200px;
+      overflow-y: auto;
+      background: rgba(0, 240, 255, 0.02);
+      border-radius: 16px;
+      padding: 10px;
+      border: 1px solid rgba(0, 240, 255, 0.06);
+    }
+
+    .trip-history::-webkit-scrollbar {
+      width: 4px;
+    }
+
+    .trip-history::-webkit-scrollbar-track {
+      background: rgba(0, 240, 255, 0.02);
+      border-radius: 10px;
+    }
+
+    .trip-history::-webkit-scrollbar-thumb {
+      background: linear-gradient(var(--neon-cyan), var(--neon-magenta));
+      border-radius: 10px;
+    }
+
+    .trip-history-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 12px;
+      border-bottom: 1px solid rgba(0, 240, 255, 0.04);
+      font-size: clamp(0.75rem, 0.8vw, 0.85rem);
+      transition: all 0.3s ease;
+      border-radius: 8px;
+      color: var(--text-secondary);
+    }
+
+    .trip-history-item:hover {
+      background: rgba(0, 240, 255, 0.04);
+      transform: translateX(5px);
+    }
+
+    .trip-history-item.active {
+      background: rgba(0, 240, 255, 0.06);
+      border-left: 2px solid var(--neon-cyan);
+    }
+
+    .trip-history-item .trip-name {
+      color: var(--neon-cyan);
+      cursor: pointer;
+      font-weight: 700;
+      transition: all 0.3s ease;
+      font-size: clamp(0.8rem, 0.9vw, 0.9rem);
+    }
+
+    .trip-history-item .trip-name:hover {
+      text-shadow: 0 0 30px rgba(0, 240, 255, 0.4);
+    }
+
+    .trip-history-item .trip-info {
+      color: var(--text-secondary);
+      font-size: clamp(0.65rem, 0.7vw, 0.75rem);
+    }
+
+    .trip-history-item .delete-trip-btn {
+      color: var(--neon-pink);
+      cursor: pointer;
+      font-size: 1rem;
+      padding: 2px 8px;
+      border-radius: 20px;
+      transition: all 0.3s ease;
+      opacity: 0.4;
+    }
+
+    .trip-history-item:hover .delete-trip-btn {
+      opacity: 1;
+    }
+
+    .trip-history-item .delete-trip-btn:hover {
+      background: rgba(255, 0, 102, 0.08);
+      transform: scale(1.2) rotate(90deg);
+      opacity: 1;
+    }
+
+    .empty-history {
+      color: var(--text-secondary);
+      text-align: center;
+      padding: 15px;
+      font-size: 0.8rem;
+      letter-spacing: 2px;
+    }
+
+    /* ===== PHOTO BUTTONS ===== */
     .photo-options {
       display: flex;
       gap: 10px;
       margin: 8px 0;
     }
+
     .photo-btn {
       flex: 1;
-      background: #0ff1;
-      border: 1px solid #0ff;
+      background: rgba(0, 240, 255, 0.04);
+      border: 1px solid rgba(0, 240, 255, 0.15);
       border-radius: 60px;
       padding: 12px;
       font-family: 'Share Tech Mono';
-      font-size: 0.75rem;
+      font-size: clamp(0.7rem, 0.8vw, 0.8rem);
       cursor: pointer;
-      color: #0ff;
+      color: var(--neon-cyan);
       text-align: center;
-      transition: 0.2s;
+      transition: all 0.3s ease;
+      box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.3);
+      font-weight: 600;
     }
-    .photo-btn:hover { background: #0ff3; border-color: #f0f; }
-    .file-zone {
-      background: #0ff1;
-      border: 1px dashed #0ff;
-      border-radius: 60px;
-      padding: 12px;
-      text-align: center;
-      margin: 8px 0;
-      cursor: pointer;
-      font-size: 0.75rem;
-      transition: 0.2s;
-    }
-    .file-zone:hover { background: #0ff2; border-color: #f0f; }
-    .btn-neon {
-      background: linear-gradient(95deg, #0ff, #f0f);
-      border: none;
-      border-radius: 60px;
-      padding: 14px;
-      font-family: 'Orbitron';
-      font-weight: bold;
-      width: 100%;
-      margin-top: 8px;
-      cursor: pointer;
-      transition: 0.15s;
-    }
-    .btn-neon:hover { opacity: 0.9; transform: scale(1.01); }
-    .btn-neon:active { transform: scale(0.98); }
-    .btn-outline { background: #111; border: 1px solid #0ff; color: #0ff; }
-    .btn-danger { background: linear-gradient(95deg, #f33, #a00); border: none; }
-    .import-group { display: flex; gap: 10px; margin-top: 10px; }
-    .btn-half { width: 50%; }
 
-    /* DRAG & DROP ZONE STYLES */
+    .photo-btn:hover {
+      background: rgba(0, 240, 255, 0.06);
+      border-color: var(--neon-cyan);
+      box-shadow: 0 0 30px rgba(0, 240, 255, 0.08);
+      transform: scale(1.02);
+    }
+
     .drag-drop-zone {
-      background: #0ff1;
-      border: 2px dashed #0ff;
+      background: rgba(0, 240, 255, 0.02);
+      border: 2px dashed rgba(0, 240, 255, 0.1);
       border-radius: 60px;
-      padding: 12px;
+      padding: 15px;
       text-align: center;
       margin: 8px 0;
-      transition: 0.2s;
-      font-size: 0.75rem;
-    }
-    .drag-drop-zone.drag-over {
-      background: #0ff3;
-      border-color: #f0f;
-      border-style: solid;
-      transform: scale(1.01);
+      transition: all 0.4s ease;
+      font-size: clamp(0.7rem, 0.8vw, 0.8rem);
+      color: var(--text-secondary);
+      box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.3);
     }
 
+    .drag-drop-zone.drag-over {
+      background: rgba(0, 240, 255, 0.06);
+      border-color: var(--neon-cyan);
+      border-style: solid;
+      transform: scale(1.02);
+      box-shadow: 0 0 50px rgba(0, 240, 255, 0.08);
+    }
+
+    .image-preview-img {
+      max-width: 100%;
+      max-height: 80px;
+      border-radius: 12px;
+      margin-top: 8px;
+      border: 1px solid rgba(0, 240, 255, 0.15);
+      box-shadow: 0 0 20px rgba(0, 240, 255, 0.05);
+    }
+
+    /* ===== TOTAL CARD ===== */
     .total-card {
-      background: rgba(8, 8, 18, 0.75);
-      backdrop-filter: blur(12px);
-      border: 1px solid #0ff;
+      background: var(--panel-bg);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(0, 240, 255, 0.1);
       border-radius: 24px;
-      padding: 18px;
+      padding: 30px;
       margin-bottom: 25px;
       text-align: center;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.4s ease;
+      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
     }
+
+    .total-card::before {
+      content: '';
+      position: absolute;
+      top: -2px;
+      left: -2px;
+      right: -2px;
+      bottom: -2px;
+      border-radius: 26px;
+      background: linear-gradient(45deg, var(--neon-cyan), var(--neon-magenta), var(--neon-purple), var(--neon-green));
+      background-size: 400% 400%;
+      z-index: -1;
+      opacity: 0.15;
+      animation: totalBorder 6s ease-in-out infinite;
+    }
+
+    @keyframes totalBorder {
+      0%, 100% { background-position: 0% 50%; opacity: 0.1; }
+      25% { background-position: 100% 50%; opacity: 0.25; }
+      50% { background-position: 50% 100%; opacity: 0.15; }
+      75% { background-position: 0% 100%; opacity: 0.2; }
+    }
+
+    .total-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5), 0 0 50px rgba(0, 240, 255, 0.05);
+    }
+
     .total-label {
       font-family: 'Orbitron';
-      font-size: 0.8rem;
-      color: #0ff;
-      letter-spacing: 2px;
-    }
-    .total-amount {
-      font-size: 2.5rem;
-      font-weight: 800;
-      text-shadow: 0 0 8px #0ff;
-      color: #fff;
+      font-size: clamp(0.8rem, 1vw, 0.9rem);
+      color: var(--neon-cyan);
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      position: relative;
+      font-weight: 700;
+      text-shadow: 0 0 30px rgba(0, 240, 255, 0.2);
     }
 
+    .total-amount {
+      font-size: clamp(3rem, 7vw, 4.5rem);
+      font-weight: 900;
+      font-family: 'Orbitron';
+      background: linear-gradient(135deg, var(--neon-cyan), var(--neon-magenta), var(--neon-purple), var(--neon-green));
+      background-size: 400% 400%;
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      text-shadow: none;
+      position: relative;
+      animation: amountGlow 4s ease-in-out infinite, gradientMove 4s ease-in-out infinite;
+    }
+
+    @keyframes amountGlow {
+      0%, 100% { filter: drop-shadow(0 0 40px rgba(0, 240, 255, 0.2)); }
+      33% { filter: drop-shadow(0 0 60px rgba(255, 0, 230, 0.25)); }
+      66% { filter: drop-shadow(0 0 60px rgba(139, 0, 255, 0.25)); }
+    }
+
+    /* ===== EXPENSE CARDS ===== */
     .section-title {
       font-family: 'Orbitron';
-      font-size: 1rem;
-      color: #0ff;
-      margin: 20px 0 12px 0;
-      border-left: 3px solid #f0f;
-      padding-left: 12px;
+      font-size: clamp(0.9rem, 1.2vw, 1.1rem);
+      color: var(--neon-cyan);
+      margin: 25px 0 15px 0;
+      border-left: 3px solid var(--neon-magenta);
+      padding-left: 14px;
+      letter-spacing: 2px;
+      animation: titlePulse 3s ease-in-out infinite;
+      font-weight: 700;
+      text-shadow: 0 0 30px rgba(0, 240, 255, 0.15);
     }
-    .expense-list { display: flex; flex-direction: column; gap: 14px; margin-bottom: 20px; max-height: 500px; overflow-y: auto; padding-right: 5px; }
-    .card {
-      background: rgba(10, 10, 22, 0.9);
-      backdrop-filter: blur(8px);
-      border: 1px solid #0ff;
-      border-radius: 20px;
-      padding: 14px;
-      cursor: pointer;
-      transition: 0.2s;
-    }
-    .card:hover { border-color: #f0f; box-shadow: 0 0 10px #f0f3; }
-    .card:active { transform: scale(0.99); }
-    .card-header { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; margin-bottom: 6px; }
-    .card-amount { font-family: 'Orbitron'; font-size: 1.3rem; font-weight: 800; background: linear-gradient(135deg, #0ff, #f0f); -webkit-background-clip: text; background-clip: text; color: transparent; }
-    .card-person { background: #f0f2; padding: 3px 10px; border-radius: 30px; font-size: 0.7rem; }
-    .card-details { font-size: 0.7rem; margin: 6px 0; display: flex; gap: 12px; flex-wrap: wrap; color: #bbb; }
-    .receipt-thumb { max-width: 100%; max-height: 100px; border-radius: 14px; margin-top: 8px; border: 1px solid #0ff; object-fit: contain; background: #000; }
-    .card-buttons { display: flex; gap: 10px; margin-top: 10px; }
-    .mini-btn { background: transparent; border: 1px solid #0ff; border-radius: 40px; padding: 6px; font-size: 0.65rem; flex: 1; cursor: pointer; color: #0ff; transition: 0.1s; }
-    .mini-btn:hover { background: #0ff2; }
-    .del-btn { border-color: #ff3366; color: #ff3366; }
 
+    .expense-list {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      margin-bottom: 20px;
+      max-height: 600px;
+      overflow-y: auto;
+      padding-right: 5px;
+    }
+
+    .expense-list::-webkit-scrollbar {
+      width: 4px;
+    }
+
+    .expense-list::-webkit-scrollbar-track {
+      background: rgba(0, 240, 255, 0.02);
+      border-radius: 10px;
+    }
+
+    .expense-list::-webkit-scrollbar-thumb {
+      background: linear-gradient(var(--neon-cyan), var(--neon-magenta));
+      border-radius: 10px;
+    }
+
+    .card {
+      background: var(--panel-bg);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(0, 240, 255, 0.08);
+      border-radius: 20px;
+      padding: 16px;
+      cursor: pointer;
+      transition: all 0.4s ease;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 2px;
+      background: linear-gradient(90deg, var(--neon-cyan), var(--neon-magenta), var(--neon-purple));
+      transition: all 0.5s ease;
+    }
+
+    .card:hover::before {
+      left: 0;
+    }
+
+    .card::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      right: -100%;
+      width: 100%;
+      height: 2px;
+      background: linear-gradient(90deg, var(--neon-purple), var(--neon-magenta), var(--neon-cyan));
+      transition: all 0.5s ease;
+    }
+
+    .card:hover::after {
+      right: 0;
+    }
+
+    .card:hover {
+      border-color: rgba(0, 240, 255, 0.2);
+      transform: translateY(-3px) scale(1.01);
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5), 0 0 40px rgba(0, 240, 255, 0.04);
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      margin-bottom: 6px;
+    }
+
+    .card-amount {
+      font-family: 'Orbitron';
+      font-size: clamp(1.2rem, 1.8vw, 1.4rem);
+      font-weight: 800;
+      background: linear-gradient(135deg, var(--neon-cyan), var(--neon-magenta));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .card-person {
+      background: rgba(255, 0, 230, 0.08);
+      border: 1px solid rgba(255, 0, 230, 0.15);
+      padding: 4px 14px;
+      border-radius: 30px;
+      font-size: clamp(0.7rem, 0.8vw, 0.8rem);
+      color: var(--neon-magenta);
+      font-weight: 600;
+    }
+
+    .card-details {
+      font-size: clamp(0.7rem, 0.8vw, 0.8rem);
+      margin: 6px 0;
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      color: var(--text-secondary);
+    }
+
+    .card-details i {
+      color: var(--neon-cyan);
+      opacity: 0.6;
+    }
+
+    .receipt-thumb {
+      max-width: 100%;
+      max-height: 100px;
+      border-radius: 14px;
+      margin-top: 8px;
+      border: 1px solid rgba(0, 240, 255, 0.1);
+      object-fit: contain;
+      background: #000;
+      box-shadow: 0 0 20px rgba(0, 240, 255, 0.03);
+    }
+
+    .card-buttons {
+      display: flex;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .mini-btn {
+      background: transparent;
+      border: 1px solid rgba(0, 240, 255, 0.1);
+      border-radius: 40px;
+      padding: 8px;
+      font-size: clamp(0.65rem, 0.7vw, 0.75rem);
+      flex: 1;
+      cursor: pointer;
+      color: var(--neon-cyan);
+      transition: all 0.3s ease;
+      font-family: 'Share Tech Mono';
+      box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.3);
+      font-weight: 600;
+    }
+
+    .mini-btn:hover {
+      background: rgba(0, 240, 255, 0.06);
+      border-color: var(--neon-cyan);
+      box-shadow: 0 0 30px rgba(0, 240, 255, 0.06);
+      transform: scale(1.05);
+    }
+
+    .del-btn {
+      border-color: rgba(255, 0, 102, 0.1);
+      color: var(--neon-pink);
+    }
+
+    .del-btn:hover {
+      background: rgba(255, 0, 102, 0.06);
+      border-color: var(--neon-pink);
+      box-shadow: 0 0 30px rgba(255, 0, 102, 0.06);
+    }
+
+    /* ===== PERSON GRID ===== */
     .person-grid {
       display: flex;
       flex-wrap: wrap;
       gap: 10px;
       margin-bottom: 20px;
     }
+
     .person-card {
-      background: #0ff1;
-      border: 1px solid #0ff;
+      background: rgba(0, 240, 255, 0.03);
+      border: 1px solid rgba(0, 240, 255, 0.08);
       border-radius: 40px;
-      padding: 8px 16px;
-      font-size: 0.75rem;
+      padding: 10px 20px;
+      font-size: clamp(0.75rem, 0.8vw, 0.85rem);
+      transition: all 0.3s ease;
+      box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.2);
+      color: var(--text-secondary);
     }
-    .person-card span { color: #f0f; font-weight: bold; font-size: 0.9rem; }
 
+    .person-card:hover {
+      background: rgba(0, 240, 255, 0.05);
+      border-color: var(--neon-cyan);
+      transform: translateY(-2px) scale(1.02);
+      box-shadow: 0 0 30px rgba(0, 240, 255, 0.04);
+    }
+
+    .person-card span {
+      color: var(--neon-cyan);
+      font-weight: 700;
+      font-size: clamp(0.9rem, 1vw, 1rem);
+    }
+
+    /* ===== SETTLEMENT ===== */
     .settlement-list {
-      background: #ff00cc10;
+      background: rgba(255, 0, 230, 0.02);
       border-radius: 20px;
-      padding: 12px;
+      padding: 14px;
       margin-bottom: 20px;
-    }
-    .debt-row {
-      border-left: 3px solid #f0f;
-      padding: 8px 12px;
-      margin: 6px 0;
-      font-size: 0.75rem;
+      border: 1px solid rgba(255, 0, 230, 0.04);
+      box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.2);
     }
 
+    .debt-row {
+      border-left: 2px solid var(--neon-magenta);
+      padding: 10px 14px;
+      margin: 6px 0;
+      font-size: clamp(0.75rem, 0.8vw, 0.85rem);
+      background: rgba(255, 0, 230, 0.02);
+      border-radius: 4px;
+      transition: all 0.3s ease;
+      color: var(--text-secondary);
+    }
+
+    .debt-row:hover {
+      background: rgba(255, 0, 230, 0.04);
+      transform: translateX(5px);
+    }
+
+    .debt-row strong {
+      color: var(--neon-cyan);
+      font-weight: 700;
+    }
+
+    .debt-row i {
+      color: var(--neon-magenta);
+    }
+
+    /* ===== SEARCH ===== */
     .search-box {
       width: 100%;
-      background: #010118;
-      border: 1px solid #f0f;
+      background: rgba(0, 240, 255, 0.02);
+      border: 1px solid rgba(255, 0, 230, 0.08);
       border-radius: 60px;
-      padding: 12px 20px;
+      padding: 14px 22px;
       margin: 15px 0 20px 0;
-      color: white;
+      color: var(--text-primary);
       font-family: 'Share Tech Mono';
+      font-size: clamp(0.85rem, 0.9vw, 0.95rem);
+      transition: all 0.4s ease;
+      box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.3);
     }
-    .search-box:focus { outline: none; border-color: #0ff; box-shadow: 0 0 8px #0ff; }
 
+    .search-box::placeholder {
+      color: rgba(200, 208, 224, 0.25);
+      font-size: clamp(0.8rem, 0.9vw, 0.9rem);
+    }
+
+    .search-box:focus {
+      outline: none;
+      border-color: var(--neon-cyan);
+      box-shadow: 0 0 40px rgba(0, 240, 255, 0.06), inset 0 0 40px rgba(0, 240, 255, 0.03);
+      background: rgba(0, 240, 255, 0.03);
+      transform: scale(1.01);
+    }
+
+    /* ===== MODAL ===== */
     .modal {
-      display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-      background: rgba(0,0,0,0.96); backdrop-filter: blur(20px); z-index: 9999;
-      align-items: center; justify-content: center;
-    }
-    .modal-box { background: #0a0a1a; border: 2px solid #0ff; border-radius: 32px; width: 90%; max-width: 500px; padding: 24px; text-align: center; max-height: 90vh; overflow-y: auto; }
-    .modal-box img { max-width: 100%; max-height: 300px; border-radius: 20px; margin: 15px 0; border: 1px solid #0ff; object-fit: contain; background: #000; }
-    .modal-details { margin: 15px 0; text-align: left; font-size: 0.85rem; line-height: 1.8; }
-    footer { text-align: center; font-size: 0.55rem; margin-top: 15px; opacity: 0.6; }
-    .warning-badge { font-size: 0.6rem; color: #f0f; margin-top: 5px; text-align: center; }
-    .success-toast {
-      position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
-      background: #0ff; color: #000; padding: 10px 20px; border-radius: 40px;
-      font-weight: bold; z-index: 10000; font-family: 'Orbitron'; font-size: 0.8rem;
-      animation: fadeOut 2.5s forwards; pointer-events: none; white-space: nowrap;
-      box-shadow: 0 0 15px #0ff;
-    }
-    .error-toast {
-      background: #f33 !important;
-      color: #fff !important;
-      box-shadow: 0 0 15px #f33 !important;
-    }
-    @keyframes fadeOut { 0% { opacity: 1; transform: translateX(-50%) translateY(0); }
-                         80% { opacity: 1; }
-                         100% { opacity: 0; transform: translateX(-50%) translateY(-20px); visibility: hidden; } }
-    .image-preview-img {
-      max-width: 100%;
-      max-height: 80px;
-      border-radius: 12px;
-      margin-top: 8px;
-      border: 1px solid #0ff;
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.95);
+      backdrop-filter: blur(40px);
+      z-index: 9999;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
     }
 
-    .image-preview-img {
-      background: #333;
-      color: #fff;
+    .modal-box {
+      background: var(--panel-bg);
+      border: 1px solid rgba(0, 240, 255, 0.1);
+      border-radius: 32px;
+      width: 90%;
+      max-width: 500px;
+      padding: 28px;
+      text-align: center;
+      max-height: 90vh;
+      overflow-y: auto;
+      position: relative;
+      box-shadow: 0 0 60px rgba(0, 0, 0, 0.5);
+    }
+
+    .modal-box::before {
+      content: '';
+      position: absolute;
+      top: -2px;
+      left: -2px;
+      right: -2px;
+      bottom: -2px;
+      border-radius: 34px;
+      background: linear-gradient(45deg, var(--neon-cyan), var(--neon-magenta), var(--neon-purple), var(--neon-cyan));
+      background-size: 400% 400%;
+      z-index: -1;
+      opacity: 0.15;
+      animation: borderGlow 4s ease-in-out infinite;
+    }
+
+    .modal-box img {
+      max-width: 100%;
+      max-height: 300px;
+      border-radius: 20px;
+      margin: 15px 0;
+      border: 1px solid rgba(0, 240, 255, 0.08);
+      object-fit: contain;
+      background: #000;
+      box-shadow: 0 0 30px rgba(0, 240, 255, 0.03);
+    }
+
+    .modal-details {
+      margin: 15px 0;
+      text-align: left;
+      font-size: clamp(0.85rem, 0.9vw, 0.95rem);
+      line-height: 2.4;
+      color: var(--text-secondary);
+    }
+
+    .modal-details strong {
+      color: var(--neon-cyan);
+      font-weight: 700;
+    }
+
+    .modal-details i {
+      color: var(--neon-cyan);
+      opacity: 0.6;
+      width: 24px;
+    }
+
+    /* ===== TOAST ===== */
+    .success-toast {
+      position: fixed;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0, 240, 255, 0.05);
+      backdrop-filter: blur(30px);
+      border: 1px solid rgba(0, 240, 255, 0.15);
+      color: var(--neon-cyan);
+      padding: 14px 30px;
+      border-radius: 60px;
+      font-weight: 700;
+      z-index: 10000;
+      font-family: 'Orbitron';
+      font-size: clamp(0.7rem, 0.8vw, 0.85rem);
+      animation: toastFade 3.5s forwards;
+      pointer-events: none;
+      white-space: nowrap;
+      box-shadow: 0 0 60px rgba(0, 0, 0, 0.5);
+      letter-spacing: 2px;
+    }
+
+    .error-toast {
+      border-color: rgba(255, 0, 102, 0.15) !important;
+      color: var(--neon-pink) !important;
+    }
+
+    @keyframes toastFade {
+      0% { opacity: 0; transform: translateX(-50%) translateY(30px); }
+      15% { opacity: 1; transform: translateX(-50%) translateY(0); }
+      85% { opacity: 1; transform: translateX(-50%) translateY(0); }
+      100% { opacity: 0; transform: translateX(-50%) translateY(-30px); }
+    }
+
+    /* ===== FOOTER ===== */
+    footer {
+      text-align: center;
+      font-size: clamp(0.6rem, 0.6vw, 0.7rem);
+      margin-top: 20px;
+      opacity: 0.3;
+      letter-spacing: 4px;
+      color: var(--neon-cyan);
+      padding-bottom: 10px;
+      animation: footerPulse 6s ease-in-out infinite;
+      font-weight: 600;
+    }
+
+    @keyframes footerPulse {
+      0%, 100% { opacity: 0.2; }
+      50% { opacity: 0.4; }
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 768px) {
+      .container { padding: 10px; }
+      .panel { padding: 16px 14px; border-radius: 18px; }
+      .trip-header { gap: 6px; }
+      .trip-select { padding: 8px 14px; font-size: 0.8rem; min-width: 100px; }
+      .btn-small { padding: 8px 14px; font-size: 0.7rem; }
+      .photo-options { flex-direction: column; gap: 6px; }
+      .photo-btn { padding: 10px; font-size: 0.7rem; }
+      .drag-drop-zone { padding: 12px; font-size: 0.7rem; }
+      .import-group { flex-direction: column; gap: 6px; }
+      .btn-half { width: 100%; }
+      .card { padding: 12px; }
+      .card-header { flex-direction: column; align-items: flex-start; gap: 4px; }
+      .card-buttons { flex-direction: column; gap: 6px; }
+      .mini-btn { padding: 8px; font-size: 0.65rem; }
+      .person-grid { gap: 6px; }
+      .person-card { padding: 8px 14px; font-size: 0.7rem; }
+      .trip-history { max-height: 150px; }
+      .trip-history-item { padding: 6px 10px; font-size: 0.7rem; flex-wrap: wrap; gap: 4px; }
+      .modal-box { padding: 20px; width: 95%; }
+      .cyber-input { padding: 12px 16px; font-size: 0.85rem; }
+      .btn-neon { padding: 12px; font-size: 0.75rem; }
+      .cyber-orb:nth-child(1) { width: 300px; height: 300px; }
+      .cyber-orb:nth-child(2) { width: 350px; height: 350px; }
+      .cyber-orb:nth-child(3) { width: 200px; height: 200px; }
+      .cyber-orb:nth-child(4) { width: 180px; height: 180px; }
+      .cyber-orb:nth-child(5) { width: 150px; height: 150px; }
+    }
+
+    @media (min-width: 769px) and (max-width: 1024px) {
+      .container { max-width: 750px; padding: 20px; }
+      .panel { padding: 24px 22px; }
+      .trip-header { gap: 10px; }
+    }
+
+    @media (min-width: 1025px) {
+      .container { max-width: 1000px; padding: 30px; }
+      .panel { padding: 30px 28px; border-radius: 28px; }
+      .expense-list { max-height: 700px; }
+      .trip-history { max-height: 250px; }
+    }
+
+    /* ===== UTILITY ===== */
+    .warning-badge {
+      font-size: clamp(0.6rem, 0.7vw, 0.7rem);
+      color: var(--text-secondary);
+      margin-top: 8px;
+      text-align: center;
+      letter-spacing: 1px;
+    }
+
+    .warning-badge i {
+      color: var(--neon-cyan);
+      opacity: 0.5;
+    }
+
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: rgba(0, 0, 0, 0.3);
+    }
+    ::-webkit-scrollbar-thumb {
+      background: linear-gradient(var(--neon-cyan), var(--neon-magenta));
+      border-radius: 10px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: linear-gradient(var(--neon-magenta), var(--neon-purple));
     }
   </style>
 </head>
 <body>
-<div class="scanline"></div>
-<div class="container">
-  <div class="glitch-title">⚡ TRIP SPLIT V1.0 ⚡</div>
-  <div style="text-align: center;"><span class="sub"><i class="fas fa-camera"></i> SMART EXPENSES. ZERO CHAOS.</span></div>
+  <!-- ===== ANIMATED BACKGROUND ===== -->
+  <div class="gradient-bg"></div>
+  <canvas id="particleCanvas"></canvas>
+  <div class="cyber-grid"></div>
+  <div class="cyber-orb"></div>
+  <div class="cyber-orb"></div>
+  <div class="cyber-orb"></div>
+  <div class="cyber-orb"></div>
+  <div class="cyber-orb"></div>
+  <div class="scanlines"></div>
+  <div class="vignette"></div>
 
-  <div class="input-panel">
-    <div class="input-title"><i class="fas fa-keyboard"></i> 📝 EXPENSE DETAILS</div>
-    <input type="text" id="personName" class="cyber-input" placeholder="👤 PERSON NAME" autocomplete="off">
-    <input type="number" id="expenseAmount" class="cyber-input" placeholder="💰 AMOUNT (₹)" autocomplete="off" step="0.01">
-    <input type="text" id="expenseNote" class="cyber-input" placeholder="📝 NOTE / ITEM" autocomplete="off">
-    <input type="text" id="expenseLocation" class="cyber-input" placeholder="📍 LOCATION" autocomplete="off">
+  <!-- ===== MAIN ===== -->
+  <div class="container">
+    <!-- HEADER -->
+    <div class="glitch-title">⚡ CYBERSPLIT ⚡</div>
+    <div class="sub-header"><i class="fas fa-camera"></i> DRAG & DROP CSV • LATEST FIRST</div>
 
-    <div class="photo-options"><div id="galleryBtn" class="photo-btn"><i class="fas fa-image"></i> 🖼️ CHOOSE FILE</div>
+    <!-- INPUT PANEL -->
+    <div class="panel">
+      <div class="panel-title"><i class="fas fa-route"></i> 🗺️ TRIP MANAGEMENT</div>
+      
+      <div class="trip-header">
+        <select id="tripSelector" class="trip-select">
+          <option value="">-- Select Trip --</option>
+        </select>
+        <button id="newTripBtn" class="btn-small"><i class="fas fa-plus"></i> NEW</button>
+        <button id="renameTripBtn" class="btn-small"><i class="fas fa-pen"></i></button>
+        <button id="deleteTripBtn" class="btn-small btn-small-danger"><i class="fas fa-trash"></i></button>
+      </div>
+
+      <div id="tripHistory" class="trip-history">
+        <div class="empty-history">📋 No trips yet. Create your first trip!</div>
+      </div>
+
+      <div style="border-top: 1px solid rgba(0, 240, 255, 0.04); margin: 15px 0 12px 0;"></div>
+      <div class="panel-title"><i class="fas fa-keyboard"></i> 📝 EXPENSE DETAILS</div>
+      
+      <input type="text" id="personName" class="cyber-input" placeholder="👤 PERSON NAME" autocomplete="off">
+      <input type="number" id="expenseAmount" class="cyber-input" placeholder="💰 AMOUNT (₹)" autocomplete="off" step="0.01">
+      <input type="text" id="expenseNote" class="cyber-input" placeholder="📝 NOTE / ITEM" autocomplete="off">
+      <input type="text" id="expenseLocation" class="cyber-input" placeholder="📍 LOCATION" autocomplete="off">
+
+      <div class="photo-options">
+        <div id="galleryBtn" class="photo-btn"><i class="fas fa-image"></i> 🖼️ CHOOSE FILE</div>
+      </div>
+      <input type="file" id="receiptUpload" accept="image/jpeg,image/png,image/webp,image/gif" style="display: none;">
+      <div id="imagePreview" style="margin-top: 8px; font-size: 0.8rem; color: var(--neon-cyan);"></div>
+
+      <button id="saveBtn" class="btn-neon"><i class="fas fa-save"></i> SAVE EXPENSE</button>
+
+      <div class="import-group" style="display: flex; gap: 10px; margin-top: 10px;">
+        <button id="exportCsvBtn" class="btn-neon btn-outline" style="width: 50%;"><i class="fas fa-download"></i> EXPORT CSV</button>
+        <div id="importCsvBtn" class="btn-neon btn-outline" style="width: 50%; cursor: pointer;"><i class="fas fa-upload"></i> IMPORT CSV</div>
+      </div>
+
+      <div id="dragDropZone" class="drag-drop-zone">
+        <i class="fas fa-cloud-upload-alt"></i> 📂 DRAG & DROP CSV FILE HERE<br>
+        <small style="opacity:0.4;">or click above button to select file</small>
+      </div>
+
+      <button id="clearAllBtn" class="btn-neon btn-danger" style="margin-top: 10px;"><i class="fas fa-trash-alt"></i> 🗑️ CLEAR ALL DATA</button>
+      <input type="file" id="csvImportFile" accept=".csv" style="display: none;">
+      <div class="warning-badge"><i class="fas fa-info-circle"></i> Each trip has its own data • Images included in CSV</div>
     </div>
-    <input type="file" id="receiptUpload" accept="image/jpeg,image/png,image/webp,image/gif" style="display: none;">
-    <div id="imagePreview" style="margin-top: 8px; font-size: 0.7rem; color: #0ff;"></div>
 
-    <button id="saveBtn" class="btn-neon"><i class="fas fa-save"></i> SAVE EXPENSE</button>
-
-    <div class="import-group">
-      <button id="exportCsvBtn" class="btn-neon btn-outline btn-half"><i class="fas fa-download"></i> EXPORT CSV</button>
-      <div id="importCsvBtn" class="btn-neon btn-outline btn-half" style="cursor: pointer;"><i class="fas fa-upload"></i> IMPORT CSV (DRAG & DROP)</div>
+    <!-- TOTAL CARD -->
+    <div class="total-card">
+      <div class="total-label"><i class="fas fa-chart-line"></i> TOTAL EXPENSES</div>
+      <div class="total-amount">₹ <span id="globalTotal">0</span></div>
     </div>
 
-    <!-- DRAG & DROP ZONE -->
-    <div id="dragDropZone" class="drag-drop-zone">
-      <i class="fas fa-cloud-upload-alt"></i> 📂 DRAG & DROP CSV FILE HERE<br>
-      <small style="opacity:0.7;">or click above button to select file</small>
-    </div>
+    <!-- EXPENSE LOGS -->
+    <div class="section-title"><i class="fas fa-list"></i> 📋 EXPENSE LOGS <span style="font-size:0.6rem; opacity:0.4;">(NEWEST FIRST)</span></div>
+    <div id="expensesContainer" class="expense-list"></div>
 
-    <button id="clearAllBtn" class="btn-neon btn-danger" style="margin-top: 10px;"><i class="fas fa-trash-alt"></i> 🗑️ CLEAR ALL DATA</button>
-    <input type="file" id="csvImportFile" accept=".csv" style="display: none;">
-    <div class="warning-badge"><i class="fas fa-info-circle"></i> 📌 Latest expenses appear on TOP | Drag & Drop CSV file directly | Time stamps preserved | Images included in CSV</div>
+    <!-- PERSON TOTALS -->
+    <div class="section-title"><i class="fas fa-users"></i> 👥 PERSON TOTALS</div>
+    <div id="personTotalsList" class="person-grid">—</div>
+
+    <!-- SETTLEMENT -->
+    <div class="section-title"><i class="fas fa-hand-holding-usd"></i> 💰 SETTLEMENT</div>
+    <div id="settlementList" class="settlement-list">⚡ CALCULATING ⚡</div>
+
+    <!-- SEARCH -->
+    <input type="text" id="searchInput" class="search-box" placeholder="🔍 SEARCH expenses...">
+
+    <footer>⚡ Click any expense • Drag & Drop CSV • Latest entries show on TOP</footer>
   </div>
 
-  <div class="total-card">
-    <div class="total-label"><i class="fas fa-chart-line"></i> TOTAL EXPENSES</div>
-    <div class="total-amount">₹ <span id="globalTotal">0</span></div>
+  <!-- ===== MODAL ===== -->
+  <div id="receiptModal" class="modal">
+    <div class="modal-box">
+      <i class="fas fa-receipt" style="color: var(--neon-cyan); font-size: 1.8rem;"></i>
+      <h3 style="font-family:Orbitron; margin: 8px 0; color: var(--neon-cyan); font-size: clamp(1rem, 1.2vw, 1.2rem); font-weight: 700; text-shadow: 0 0 30px rgba(0, 240, 255, 0.2);">📸 FULL DETAILS</h3>
+      <img id="modalImg" src="">
+      <div id="modalDetails" class="modal-details"></div>
+      <button id="closeModalBtn" class="btn-neon" style="background: transparent; border: 1px solid rgba(0, 240, 255, 0.1); color: var(--neon-cyan);">CLOSE</button>
+    </div>
   </div>
 
-  <div class="section-title"><i class="fas fa-list"></i> 📋 EXPENSE LOGS <span style="font-size:0.6rem;">(NEWEST FIRST)</span></div>
-  <div id="expensesContainer" class="expense-list"></div>
+  <script>
+    // ==================== PARTICLE SYSTEM ====================
+    const canvas = document.getElementById('particleCanvas');
+    const ctx = canvas.getContext('2d');
+    let particles = [];
+    let mouseX = 0;
+    let mouseY = 0;
+    let animationId;
 
-  <div class="section-title"><i class="fas fa-users"></i> 👥 PERSON TOTALS</div>
-  <div id="personTotalsList" class="person-grid">—</div>
-
-  <div class="section-title"><i class="fas fa-hand-holding-usd"></i> 💰 SETTLEMENT</div>
-  <div id="settlementList" class="settlement-list">⚡ CALCULATING ⚡</div>
-
-  <input type="text" id="searchInput" class="search-box" placeholder="🔍 SEARCH expenses...">
-
-  <footer>⚡ Click any expense | Drag & Drop CSV | Latest entries show on TOP</footer>
-</div>
-
-</div>
-
-<!-- Receipt Modal -->
-<div id="receiptModal" class="modal">
-  <div class="modal-box">
-    <i class="fas fa-receipt" style="color:#0ff; font-size: 1.8rem;"></i>
-    <h3 style="font-family:Orbitron; margin: 8px 0;">📸 FULL DETAILS</h3>
-    <img id="modalImg" src="">
-    <div id="modalDetails" class="modal-details"></div>
-    <button id="closeModalBtn" class="btn-neon" style="background:#111;">CLOSE</button>
-  </div>
-</div>
-
-<script>
-  // ==================== DATA & STORAGE ====================
-  let expenses = [];
-  let editId = null;
-  let pendingImage = null;
-
-  // Load data
-  try {
-    const stored = localStorage.getItem("NEON_SPLIT_DATA");
-    if (stored && stored !== "undefined") {
-      const parsed = JSON.parse(stored);
-      if (Array.isArray(parsed)) expenses = parsed;
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
     }
-  } catch(e) { expenses = []; }
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
 
-  function showToast(msg, isError = false) {
-    const toast = document.createElement("div");
-    toast.className = "success-toast";
-    if (isError) toast.classList.add("error-toast");
-    toast.innerText = msg;
-    document.body.appendChild(toast);
-    setTimeout(() => toast.remove(), 2500);
-  }
+    class Particle {
+      constructor() {
+        this.reset();
+      }
 
-  // ========== IMAGE COMPRESSION ==========
-  function compressImage(file, quality = 0.6) {
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        const img = new Image();
-        img.onload = () => {
-          const canvas = document.createElement('canvas');
-          let width = img.width;
-          let height = img.height;
-          const maxSize = 1024;
-          if (width > height && width > maxSize) {
-            height = (height * maxSize) / width;
-            width = maxSize;
-          } else if (height > maxSize) {
-            width = (width * maxSize) / height;
-            height = maxSize;
-          }
-          canvas.width = width;
-          canvas.height = height;
-          const ctx = canvas.getContext('2d');
-          ctx.drawImage(img, 0, 0, width, height);
-          const compressedDataUrl = canvas.toDataURL('image/jpeg', quality);
-          resolve(compressedDataUrl);
-        };
-        img.onerror = reject;
-        img.src = e.target.result;
-      };
-      reader.onerror = reject;
-      reader.readAsDataURL(file);
+      reset() {
+        this.x = Math.random() * canvas.width;
+        this.y = Math.random() * canvas.height;
+        this.size = Math.random() * 2 + 0.5;
+        this.speedX = (Math.random() - 0.5) * 0.5;
+        this.speedY = (Math.random() - 0.5) * 0.5;
+        this.opacity = Math.random() * 0.5 + 0.1;
+        this.color = [
+          [0, 240, 255],
+          [255, 0, 230],
+          [139, 0, 255],
+          [0, 255, 136],
+          [255, 102, 0]
+        ][Math.floor(Math.random() * 5)];
+        this.life = Math.random() * 200 + 100;
+        this.maxLife = this.life;
+      }
+
+      update() {
+        this.x += this.speedX;
+        this.y += this.speedY;
+        this.life--;
+
+        const dx = this.x - mouseX;
+        const dy = this.y - mouseY;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist < 150) {
+          const force = (150 - dist) / 150;
+          this.x += dx * force * 0.02;
+          this.y += dy * force * 0.02;
+        }
+
+        if (this.x < 0 || this.x > canvas.width || this.y < 0 || this.y > canvas.height || this.life <= 0) {
+          this.reset();
+        }
+      }
+
+      draw() {
+        const opacity = (this.life / this.maxLife) * this.opacity;
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(${this.color[0]}, ${this.color[1]}, ${this.color[2]}, ${opacity})`;
+        ctx.fill();
+        
+        ctx.shadowBlur = 10;
+        ctx.shadowColor = `rgba(${this.color[0]}, ${this.color[1]}, ${this.color[2]}, ${opacity * 0.3})`;
+        ctx.fill();
+        ctx.shadowBlur = 0;
+      }
+    }
+
+    const particleCount = Math.min(120, Math.floor(window.innerWidth / 10));
+    for (let i = 0; i < particleCount; i++) {
+      particles.push(new Particle());
+    }
+
+    document.addEventListener('mousemove', (e) => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
     });
-  }
 
-  // ========== IMAGE UPLOAD ==========
-  const galleryBtn = document.getElementById('galleryBtn');
-  const fileInput = document.getElementById('receiptUpload');
-  const imagePreviewDiv = document.getElementById('imagePreview');
+    document.addEventListener('touchmove', (e) => {
+      const touch = e.touches[0];
+      mouseX = touch.clientX;
+      mouseY = touch.clientY;
+    }, { passive: true });
 
-  galleryBtn.addEventListener('click', () => fileInput.click());
+    function animateParticles() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      
+      for (let p of particles) {
+        p.update();
+        p.draw();
+      }
 
-  fileInput.addEventListener('change', async (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      if (file.size > 100 * 1024 * 1024) {
-        showToast("⚠️ File too large! Max 100MB", true);
-        fileInput.value = "";
+      for (let i = 0; i < particles.length; i++) {
+        for (let j = i + 1; j < particles.length; j++) {
+          const dx = particles[i].x - particles[j].x;
+          const dy = particles[i].y - particles[j].y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+          if (dist < 100) {
+            const opacity = (1 - dist / 100) * 0.15;
+            ctx.beginPath();
+            ctx.moveTo(particles[i].x, particles[i].y);
+            ctx.lineTo(particles[j].x, particles[j].y);
+            ctx.strokeStyle = `rgba(0, 240, 255, ${opacity})`;
+            ctx.lineWidth = 0.5;
+            ctx.stroke();
+          }
+        }
+      }
+
+      animationId = requestAnimationFrame(animateParticles);
+    }
+
+    animateParticles();
+
+    // ==================== DATA & STORAGE ====================
+    let allTrips = {};
+    let currentTrip = "";
+    let expenses = [];
+    let editId = null;
+    let pendingImage = null;
+
+    // Load all trips data
+    function loadAllTrips() {
+      try {
+        const stored = localStorage.getItem("NEON_TRIP_DATA");
+        if (stored && stored !== "undefined") {
+          const parsed = JSON.parse(stored);
+          if (typeof parsed === 'object' && parsed !== null) {
+            allTrips = parsed;
+          }
+        }
+      } catch(e) { 
+        allTrips = {}; 
+      }
+      
+      if (Object.keys(allTrips).length === 0) {
+        const defaultTrip = "My Trip";
+        allTrips[defaultTrip] = [];
+        currentTrip = defaultTrip;
+      } else {
+        const keys = Object.keys(allTrips);
+        if (!currentTrip || !allTrips[currentTrip]) {
+          currentTrip = keys[0];
+        }
+      }
+      
+      loadCurrentTrip();
+      updateTripSelector();
+      updateTripHistory();
+    }
+
+    function loadCurrentTrip() {
+      if (currentTrip && allTrips[currentTrip]) {
+        expenses = allTrips[currentTrip];
+      } else if (Object.keys(allTrips).length > 0) {
+        const keys = Object.keys(allTrips);
+        currentTrip = keys[0];
+        expenses = allTrips[currentTrip];
+      } else {
+        expenses = [];
+        currentTrip = "";
+      }
+      renderStats();
+      renderExpenses();
+    }
+
+    function saveAllTrips() {
+      try {
+        localStorage.setItem("NEON_TRIP_DATA", JSON.stringify(allTrips));
+      } catch(e) {
+        showToast("Storage error!", true);
+      }
+    }
+
+    function saveAll() {
+      if (currentTrip && allTrips[currentTrip] !== undefined) {
+        allTrips[currentTrip] = expenses;
+        saveAllTrips();
+      }
+      renderStats();
+      renderExpenses();
+      updateTripSelector();
+      updateTripHistory();
+    }
+
+    // ==================== TRIP MANAGEMENT ====================
+    function updateTripSelector() {
+      const selector = document.getElementById("tripSelector");
+      selector.innerHTML = "";
+      
+      const keys = Object.keys(allTrips);
+      if (keys.length === 0) {
+        selector.innerHTML = '<option value="">-- No Trips --</option>';
         return;
       }
-      showToast("🔄 Compressing...", false);
-      try {
-        const compressedBase64 = await compressImage(file, 0.6);
-        pendingImage = compressedBase64;
-        imagePreviewDiv.innerHTML = `<i class="fas fa-check-circle"></i> ✅ Image compressed!`;
-        const img = document.createElement("img");
-        img.src = compressedBase64;
-        img.className = "image-preview-img";
-        imagePreviewDiv.appendChild(img);
-        showToast("✅ Image ready!");
-      } catch(err) {
-        showToast("Compression failed", true);
+      
+      for (let key of keys) {
+        const option = document.createElement("option");
+        option.value = key;
+        option.textContent = key + ` (${allTrips[key].length} expenses)`;
+        if (key === currentTrip) option.selected = true;
+        selector.appendChild(option);
+      }
+      
+      if (!keys.includes(currentTrip) && keys.length > 0) {
+        currentTrip = keys[0];
+        selector.value = currentTrip;
+        loadCurrentTrip();
       }
     }
-  });
 
-  // ========== CLEAR ALL DATA ==========
-  document.getElementById("clearAllBtn").addEventListener("click", () => {
-    if (confirm("⚠️⚠️⚠️ WARNING: This will DELETE ALL EXPENSES! ⚠️⚠️⚠️\n\nAre you absolutely sure?")) {
+    function updateTripHistory() {
+      const container = document.getElementById("tripHistory");
+      const keys = Object.keys(allTrips);
+      
+      if (keys.length === 0) {
+        container.innerHTML = '<div class="empty-history">📋 No trips yet. Create your first trip!</div>';
+        return;
+      }
+      
+      let html = '';
+      const sortedKeys = keys.sort((a, b) => {
+        const aExp = allTrips[a] || [];
+        const bExp = allTrips[b] || [];
+        const aTime = aExp.length > 0 ? new Date(aExp[0]?.time || 0).getTime() : 0;
+        const bTime = bExp.length > 0 ? new Date(bExp[0]?.time || 0).getTime() : 0;
+        return bTime - aTime;
+      });
+      
+      for (let key of sortedKeys) {
+        const tripData = allTrips[key] || [];
+        const total = tripData.reduce((sum, e) => sum + (parseFloat(e.amount) || 0), 0);
+        const count = tripData.length;
+        const isActive = key === currentTrip;
+        html += `
+          <div class="trip-history-item ${isActive ? 'active' : ''}">
+            <span class="trip-name" data-trip="${key}">${isActive ? '▶ ' : ''}${key}</span>
+            <span class="trip-info">${count} expenses • ₹${total.toFixed(2)}</span>
+            <span class="delete-trip-btn" data-trip="${key}" title="Delete this trip">✕</span>
+          </div>
+        `;
+      }
+      container.innerHTML = html;
+      
+      container.querySelectorAll('.trip-name').forEach(el => {
+        el.addEventListener('click', () => {
+          const tripName = el.dataset.trip;
+          if (tripName && allTrips[tripName]) {
+            switchTrip(tripName);
+          }
+        });
+      });
+      
+      container.querySelectorAll('.delete-trip-btn').forEach(el => {
+        el.addEventListener('click', (e) => {
+          e.stopPropagation();
+          const tripName = el.dataset.trip;
+          if (tripName && confirm(`⚠️ Delete trip "${tripName}" and all its data?\n\nThis action cannot be undone!`)) {
+            deleteTrip(tripName);
+          }
+        });
+      });
+    }
+
+    function switchTrip(tripName) {
+      if (tripName === currentTrip) return;
+      if (allTrips[tripName]) {
+        if (currentTrip && allTrips[currentTrip] !== undefined) {
+          allTrips[currentTrip] = expenses;
+        }
+        currentTrip = tripName;
+        expenses = allTrips[tripName] || [];
+        editId = null;
+        pendingImage = null;
+        document.getElementById("imagePreview").innerHTML = "";
+        document.getElementById("saveBtn").innerHTML = '<i class="fas fa-save"></i> SAVE EXPENSE';
+        saveAll();
+        showToast(`📂 Switched to "${tripName}"`);
+      }
+    }
+
+    function createNewTrip() {
+      const name = prompt("Enter new trip name:", "Trip " + (Object.keys(allTrips).length + 1));
+      if (!name || name.trim() === "") return;
+      const tripName = name.trim();
+      
+      if (allTrips[tripName]) {
+        showToast("⚠️ Trip already exists!", true);
+        return;
+      }
+      
+      if (currentTrip && allTrips[currentTrip] !== undefined) {
+        allTrips[currentTrip] = expenses;
+      }
+      
+      allTrips[tripName] = [];
+      currentTrip = tripName;
       expenses = [];
       editId = null;
       pendingImage = null;
+      document.getElementById("imagePreview").innerHTML = "";
+      document.getElementById("saveBtn").innerHTML = '<i class="fas fa-save"></i> SAVE EXPENSE';
       saveAll();
-      showToast("🗑️ All data cleared!");
+      showToast(`✅ New trip "${tripName}" created!`);
     }
-  });
 
-  // ========== EXPENSE FUNCTIONS ==========
-  function getPersonTotals() {
-    const personMap = new Map();
-    for (let exp of expenses) {
-      let amt = parseFloat(exp.amount) || 0;
-      personMap.set(exp.person, (personMap.get(exp.person) || 0) + amt);
-    }
-    return personMap;
-  }
-
-  function getSettlement() {
-    const personMap = getPersonTotals();
-    let total = 0;
-    for (let val of personMap.values()) total += val;
-    if (personMap.size === 0 || total === 0) return [];
-    const share = total / personMap.size;
-    let balances = [];
-    for (let [name, val] of personMap.entries()) {
-      balances.push({ name, balance: val - share });
-    }
-    balances.sort((a, b) => a.balance - b.balance);
-    let i = 0, j = balances.length - 1;
-    let settlements = [];
-    while (i < j) {
-      let debtor = balances[i];
-      let creditor = balances[j];
-      let amount = Math.min(-debtor.balance, creditor.balance);
-      if (amount > 0.01) {
-        settlements.push({ from: debtor.name, to: creditor.name, amount: amount });
-        debtor.balance += amount;
-        creditor.balance -= amount;
+    function renameTrip() {
+      if (!currentTrip) {
+        showToast("⚠️ No trip selected", true);
+        return;
       }
-      if (Math.abs(debtor.balance) < 0.01) i++;
-      if (Math.abs(creditor.balance) < 0.01) j--;
-    }
-    return settlements;
-  }
-
-  function renderStats() {
-    let total = 0;
-    const personMap = getPersonTotals();
-    for (let val of personMap.values()) total += val;
-    document.getElementById("globalTotal").innerText = total.toFixed(2);
-
-    let personsHtml = "";
-    if (personMap.size === 0) personsHtml = "<span style='color:#aaa;'>— no expenses —</span>";
-    else {
-      for (let [name, val] of personMap.entries()) {
-        personsHtml += `<div class="person-card"><i class="fas fa-user"></i> ${escapeHtml(name)}: <span>₹${val.toFixed(2)}</span></div>`;
+      const newName = prompt("Enter new name for trip:", currentTrip);
+      if (!newName || newName.trim() === "" || newName.trim() === currentTrip) return;
+      const newTripName = newName.trim();
+      
+      if (allTrips[newTripName]) {
+        showToast("⚠️ A trip with this name already exists!", true);
+        return;
       }
-    }
-    document.getElementById("personTotalsList").innerHTML = personsHtml;
-
-    const settlements = getSettlement();
-    let settlementHtml = "";
-    if (settlements.length === 0 && personMap.size > 0 && total > 0) {
-      settlementHtml = '<div class="debt-row" style="border-left-color:#0ff;">✨ ALL SETTLED ✨</div>';
-    } else if (settlements.length > 0) {
-      settlementHtml = settlements.map(s =>
-        `<div class="debt-row"><i class="fas fa-arrow-right"></i> ${escapeHtml(s.from)} → ${escapeHtml(s.to)} : <strong style="color:#0ff;">₹${s.amount.toFixed(2)}</strong></div>`
-      ).join('');
-    } else {
-      settlementHtml = '<div class="debt-row">⚠️ Add expenses to see settlement</div>';
-    }
-    document.getElementById("settlementList").innerHTML = settlementHtml;
-  }
-
-  function openFullDetails(exp) {
-    const modal = document.getElementById("receiptModal");
-    const modalImg = document.getElementById("modalImg");
-    const modalDetails = document.getElementById("modalDetails");
-
-    if (exp.image && exp.image.startsWith("data:image")) {
-      modalImg.src = exp.image;
-      modalImg.style.display = "block";
-    } else {
-      modalImg.src = "";
-      modalImg.style.display = "none";
+      
+      allTrips[newTripName] = allTrips[currentTrip];
+      delete allTrips[currentTrip];
+      currentTrip = newTripName;
+      saveAll();
+      showToast(`✅ Trip renamed to "${newTripName}"`);
     }
 
-    modalDetails.innerHTML = `
-      <div style="border-bottom:1px solid #0ff; padding-bottom:8px; margin-bottom:8px;">
-        <strong style="color:#0ff; font-size:1.2rem;">₹${parseFloat(exp.amount).toFixed(2)}</strong>
-      </div>
-      <div><i class="fas fa-user"></i> <strong>Person:</strong> ${escapeHtml(exp.person)}</div>
-      <div><i class="fas fa-pen"></i> <strong>Note:</strong> ${escapeHtml(exp.note)}</div>
-      <div><i class="fas fa-map-marker-alt"></i> <strong>Location:</strong> ${escapeHtml(exp.location)}</div>
-      <div><i class="far fa-clock"></i> <strong>Time:</strong> ${exp.time || "unknown"}</div>
-      ${!exp.image ? '<div style="color:#aaa;"><i class="fas fa-camera-slash"></i> No receipt</div>' : ''}
-    `;
-    modal.style.display = "flex";
-  }
+    function deleteTrip(tripName) {
+      const keys = Object.keys(allTrips);
+      if (keys.length <= 1) {
+        showToast("⚠️ Cannot delete the last trip! Create a new trip first.", true);
+        return;
+      }
+      
+      delete allTrips[tripName];
+      
+      const remainingKeys = Object.keys(allTrips);
+      
+      if (tripName === currentTrip) {
+        if (remainingKeys.length > 0) {
+          currentTrip = remainingKeys[0];
+          expenses = allTrips[currentTrip] || [];
+        } else {
+          currentTrip = "";
+          expenses = [];
+        }
+      }
+      
+      editId = null;
+      pendingImage = null;
+      document.getElementById("imagePreview").innerHTML = "";
+      document.getElementById("saveBtn").innerHTML = '<i class="fas fa-save"></i> SAVE EXPENSE';
+      
+      saveAllTrips();
+      updateTripSelector();
+      updateTripHistory();
+      renderStats();
+      renderExpenses();
+      
+      showToast(`🗑️ Trip "${tripName}" deleted!`);
+    }
 
-  function renderExpenses() {
-    const searchTerm = document.getElementById("searchInput").value.toLowerCase();
-    let filtered = expenses.filter(e =>
-      e.person.toLowerCase().includes(searchTerm) ||
-      e.note.toLowerCase().includes(searchTerm) ||
-      e.location.toLowerCase().includes(searchTerm)
-    );
+    // ==================== TOAST ====================
+    function showToast(msg, isError = false) {
+      const toast = document.createElement("div");
+      toast.className = "success-toast";
+      if (isError) toast.classList.add("error-toast");
+      toast.innerText = msg;
+      document.body.appendChild(toast);
+      setTimeout(() => toast.remove(), 3500);
+    }
 
-    // Sort by time - NEWEST FIRST (most recent at top)
-    filtered.sort((a, b) => {
-      const timeA = new Date(a.time);
-      const timeB = new Date(b.time);
-      return timeB - timeA;
+    // ========== IMAGE COMPRESSION ==========
+    function compressImage(file, quality = 0.6) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          const img = new Image();
+          img.onload = () => {
+            const canvas = document.createElement('canvas');
+            let width = img.width;
+            let height = img.height;
+            const maxSize = 1024;
+            if (width > height && width > maxSize) {
+              height = (height * maxSize) / width;
+              width = maxSize;
+            } else if (height > maxSize) {
+              width = (width * maxSize) / height;
+              height = maxSize;
+            }
+            canvas.width = width;
+            canvas.height = height;
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(img, 0, 0, width, height);
+            const compressedDataUrl = canvas.toDataURL('image/jpeg', quality);
+            resolve(compressedDataUrl);
+          };
+          img.onerror = reject;
+          img.src = e.target.result;
+        };
+        reader.onerror = reject;
+        reader.readAsDataURL(file);
+      });
+    }
+
+    // ========== IMAGE UPLOAD ==========
+    const galleryBtn = document.getElementById('galleryBtn');
+    const fileInput = document.getElementById('receiptUpload');
+    const imagePreviewDiv = document.getElementById('imagePreview');
+
+    galleryBtn.addEventListener('click', () => fileInput.click());
+
+    fileInput.addEventListener('change', async (e) => {
+      const file = e.target.files[0];
+      if (file) {
+        if (file.size > 100 * 1024 * 1024) {
+          showToast("⚠️ File too large! Max 100MB", true);
+          fileInput.value = "";
+          return;
+        }
+        showToast("🔄 Compressing...", false);
+        try {
+          const compressedBase64 = await compressImage(file, 0.6);
+          pendingImage = compressedBase64;
+          imagePreviewDiv.innerHTML = `<i class="fas fa-check-circle"></i> ✅ Image compressed!`;
+          const img = document.createElement("img");
+          img.src = compressedBase64;
+          img.className = "image-preview-img";
+          imagePreviewDiv.appendChild(img);
+          showToast("✅ Image ready!");
+        } catch(err) {
+          showToast("Compression failed", true);
+        }
+      }
     });
 
-    const container = document.getElementById("expensesContainer");
-    if (filtered.length === 0) {
-      container.innerHTML = `<div style="text-align:center;padding:30px;background:#0f0f1a;border-radius:20px;">🌀 NO EXPENSES YET 🌀</div>`;
-      return;
+    // ========== CLEAR ALL DATA ==========
+    document.getElementById("clearAllBtn").addEventListener("click", () => {
+      if (!currentTrip) {
+        showToast("⚠️ No trip selected", true);
+        return;
+      }
+      if (confirm(`⚠️⚠️⚠️ WARNING: This will DELETE ALL EXPENSES in "${currentTrip}"! ⚠️⚠️⚠️\n\nAre you absolutely sure?`)) {
+        expenses = [];
+        allTrips[currentTrip] = [];
+        editId = null;
+        pendingImage = null;
+        saveAll();
+        showToast(`🗑️ All data cleared from "${currentTrip}"`);
+      }
+    });
+
+    // ========== EXPENSE FUNCTIONS ==========
+    function getPersonTotals() {
+      const personMap = new Map();
+      for (let exp of expenses) {
+        let amt = parseFloat(exp.amount) || 0;
+        personMap.set(exp.person, (personMap.get(exp.person) || 0) + amt);
+      }
+      return personMap;
     }
 
-    container.innerHTML = "";
-    for (let exp of filtered) {
-      const card = document.createElement("div");
-      card.className = "card";
-      card.innerHTML = `
-        <div class="card-header">
-          <span class="card-amount">₹${parseFloat(exp.amount).toFixed(2)}</span>
-          <span class="card-person"><i class="fas fa-user-astronaut"></i> ${escapeHtml(exp.person)}</span>
+    function getSettlement() {
+      const personMap = getPersonTotals();
+      let total = 0;
+      for (let val of personMap.values()) total += val;
+      if (personMap.size === 0 || total === 0) return [];
+      const share = total / personMap.size;
+      let balances = [];
+      for (let [name, val] of personMap.entries()) {
+        balances.push({ name, balance: val - share });
+      }
+      balances.sort((a, b) => a.balance - b.balance);
+      let i = 0, j = balances.length - 1;
+      let settlements = [];
+      while (i < j) {
+        let debtor = balances[i];
+        let creditor = balances[j];
+        let amount = Math.min(-debtor.balance, creditor.balance);
+        if (amount > 0.01) {
+          settlements.push({ from: debtor.name, to: creditor.name, amount: amount });
+          debtor.balance += amount;
+          creditor.balance -= amount;
+        }
+        if (Math.abs(debtor.balance) < 0.01) i++;
+        if (Math.abs(creditor.balance) < 0.01) j--;
+      }
+      return settlements;
+    }
+
+    function renderStats() {
+      let total = 0;
+      const personMap = getPersonTotals();
+      for (let val of personMap.values()) total += val;
+      document.getElementById("globalTotal").innerText = total.toFixed(2);
+
+      let personsHtml = "";
+      if (personMap.size === 0) personsHtml = "<span style='color: var(--text-secondary);'>— no expenses —</span>";
+      else {
+        for (let [name, val] of personMap.entries()) {
+          personsHtml += `<div class="person-card"><i class="fas fa-user"></i> ${escapeHtml(name)}: <span>₹${val.toFixed(2)}</span></div>`;
+        }
+      }
+      document.getElementById("personTotalsList").innerHTML = personsHtml;
+
+      const settlements = getSettlement();
+      let settlementHtml = "";
+      if (settlements.length === 0 && personMap.size > 0 && total > 0) {
+        settlementHtml = '<div class="debt-row" style="border-left-color: var(--neon-cyan); color: var(--neon-cyan);">✨ ALL SETTLED ✨</div>';
+      } else if (settlements.length > 0) {
+        settlementHtml = settlements.map(s =>
+          `<div class="debt-row"><i class="fas fa-arrow-right"></i> ${escapeHtml(s.from)} → ${escapeHtml(s.to)} : <strong>₹${s.amount.toFixed(2)}</strong></div>`
+        ).join('');
+      } else {
+        settlementHtml = '<div class="debt-row" style="border-left-color: rgba(200,208,224,0.1); color: var(--text-secondary);">⚠️ Add expenses to see settlement</div>';
+      }
+      document.getElementById("settlementList").innerHTML = settlementHtml;
+    }
+
+    function openFullDetails(exp) {
+      const modal = document.getElementById("receiptModal");
+      const modalImg = document.getElementById("modalImg");
+      const modalDetails = document.getElementById("modalDetails");
+
+      if (exp.image && exp.image.startsWith("data:image")) {
+        modalImg.src = exp.image;
+        modalImg.style.display = "block";
+      } else {
+        modalImg.src = "";
+        modalImg.style.display = "none";
+      }
+
+      modalDetails.innerHTML = `
+        <div style="border-bottom:1px solid rgba(0,240,255,0.06); padding-bottom:10px; margin-bottom:10px;">
+          <strong style="color: var(--neon-cyan); font-size: clamp(1.2rem, 1.5vw, 1.4rem);">₹${parseFloat(exp.amount).toFixed(2)}</strong>
         </div>
-        <div class="card-details">
-          <span><i class="fas fa-pen"></i> ${escapeHtml(exp.note)}</span>
-          <span><i class="fas fa-map-pin"></i> ${escapeHtml(exp.location)}</span>
-        </div>
-        <div style="font-size:0.6rem;">📅 ${exp.time || "unknown"}</div>
-        ${exp.image ? `<img src="${exp.image}" class="receipt-thumb" alt="receipt" loading="lazy">` : '<div style="font-size:0.6rem; color:#aaa;">no receipt</div>'}
-        <div class="card-buttons">
-          <button class="mini-btn edit-btn" data-id="${exp.id}">✏️ EDIT</button>
-          <button class="mini-btn del-btn delete-btn" data-id="${exp.id}">🗑️ DELETE</button>
-        </div>
+        <div><i class="fas fa-user"></i> <strong>Person:</strong> ${escapeHtml(exp.person)}</div>
+        <div><i class="fas fa-pen"></i> <strong>Note:</strong> ${escapeHtml(exp.note)}</div>
+        <div><i class="fas fa-map-marker-alt"></i> <strong>Location:</strong> ${escapeHtml(exp.location)}</div>
+        <div><i class="far fa-clock"></i> <strong>Time:</strong> ${exp.time || "unknown"}</div>
+        ${!exp.image ? '<div style="color:var(--text-secondary);"><i class="fas fa-camera-slash"></i> No receipt</div>' : ''}
       `;
-
-      card.querySelector(".edit-btn").addEventListener("click", (e) => {
-        e.stopPropagation();
-        startEdit(exp.id);
-      });
-      card.querySelector(".delete-btn").addEventListener("click", (e) => {
-        e.stopPropagation();
-        if (confirm("DELETE?")) {
-          expenses = expenses.filter(e => e.id !== exp.id);
-          if (editId === exp.id) editId = null;
-          saveAll();
-        }
-      });
-      card.addEventListener("click", () => openFullDetails(exp));
-      container.appendChild(card);
-    }
-  }
-
-  function startEdit(id) {
-    const exp = expenses.find(e => e.id === id);
-    if (!exp) return;
-    document.getElementById("personName").value = exp.person;
-    document.getElementById("expenseAmount").value = exp.amount;
-    document.getElementById("expenseNote").value = exp.note;
-    document.getElementById("expenseLocation").value = exp.location;
-    if (exp.image) {
-      pendingImage = exp.image;
-      imagePreviewDiv.innerHTML = `<i class="fas fa-check-circle"></i> ✅ Receipt attached`;
-      const img = document.createElement("img");
-      img.src = pendingImage;
-      img.className = "image-preview-img";
-      imagePreviewDiv.appendChild(img);
-    } else {
-      pendingImage = null;
-      imagePreviewDiv.innerHTML = "";
-    }
-    editId = exp.id;
-    document.getElementById("saveBtn").innerHTML = '<i class="fas fa-pen-fancy"></i> UPDATE EXPENSE';
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  }
-
-  async function saveExpense() {
-    const person = document.getElementById("personName").value.trim();
-    const amount = parseFloat(document.getElementById("expenseAmount").value);
-    const note = document.getElementById("expenseNote").value.trim();
-    const location = document.getElementById("expenseLocation").value.trim();
-
-    if (!person || isNaN(amount) || amount <= 0 || !note || !location) {
-      showToast("⚠️ Fill all fields", true);
-      return;
+      modal.style.display = "flex";
     }
 
-    const imageData = pendingImage || null;
-    const now = new Date().toLocaleString();
+    function renderExpenses() {
+      const searchTerm = document.getElementById("searchInput").value.toLowerCase();
+      let filtered = expenses.filter(e =>
+        e.person.toLowerCase().includes(searchTerm) ||
+        e.note.toLowerCase().includes(searchTerm) ||
+        e.location.toLowerCase().includes(searchTerm)
+      );
 
-    if (editId !== null) {
-      const index = expenses.findIndex(e => e.id === editId);
-      if (index !== -1) {
-        expenses[index] = { ...expenses[index], person, amount, note, location, image: imageData, time: now };
-        showToast("✅ Updated!");
-      }
-      editId = null;
-      document.getElementById("saveBtn").innerHTML = '<i class="fas fa-save"></i> SAVE EXPENSE';
-    } else {
-      const newId = Date.now() + Math.random() * 10000;
-      expenses.unshift({ id: newId, person, amount, note, location, image: imageData, time: now });
-      showToast("✅ Expense saved!");
-    }
-
-    document.getElementById("personName").value = "";
-    document.getElementById("expenseAmount").value = "";
-    document.getElementById("expenseNote").value = "";
-    document.getElementById("expenseLocation").value = "";
-    fileInput.value = "";
-    pendingImage = null;
-    imagePreviewDiv.innerHTML = "";
-
-    saveAll();
-  }
-
-  // ========== CSV IMPORT with LATEST FIRST and IMAGES ==========
-  function importFromCSV(file) {
-    if (file.size > 100 * 1024 * 1024) {
-      showToast("File too large! Max 100MB", true);
-      return;
-    }
-
-    const reader = new FileReader();
-    reader.onload = function(e) {
-      const content = e.target.result;
-      const lines = content.split(/\r?\n/);
-      let importedExpenses = [];
-      let skippedCount = 0;
-
-      for (let i = 0; i < lines.length; i++) {
-        let line = lines[i].trim();
-        if (line === "") continue;
-
-        // Skip header rows and summary sections
-        if (line.toLowerCase().includes("person") && line.toLowerCase().includes("amount") && line.toLowerCase().includes("note")) continue;
-        if (line.startsWith("===")) continue;
-        if (line.startsWith("GRAND")) continue;
-        if (line.startsWith("From")) continue;
-        if (line.startsWith("Total")) continue;
-
-        // Parse CSV respecting quotes
-        let parts = [];
-        let inQuote = false;
-        let current = "";
-        for (let ch of line) {
-          if (ch === '"') {
-            inQuote = !inQuote;
-            continue;
-          }
-          if (ch === ',' && !inQuote) {
-            parts.push(current.trim());
-            current = "";
-            continue;
-          }
-          current += ch;
-        }
-        parts.push(current.trim());
-
-        parts = parts.map(p => p.replace(/^"|"$/g, ''));
-
-        if (parts.length < 5) {
-          skippedCount++;
-          continue;
-        }
-
-        let person = parts[0] || "";
-        let amount = parseFloat(parts[1]);
-        let note = parts[2] || "";
-        let location = parts[3] || "";
-        let time = (parts[4] && parts[4].trim() !== "") ? parts[4].trim() : new Date().toLocaleString();
-        let image = (parts.length > 5 && parts[5] && parts[5].trim() !== "") ? parts[5].trim() : null;
-
-        if (!person || isNaN(amount) || amount <= 0 || !note || !location) {
-          skippedCount++;
-          continue;
-        }
-
-        const newId = Date.now() + importedExpenses.length + Math.random() * 10000;
-        importedExpenses.push({
-          id: newId,
-          person: person,
-          amount: amount,
-          note: note,
-          location: location,
-          image: image || null,
-          time: time
-        });
-      }
-
-      // Sort imported expenses by time (NEWEST FIRST)
-      importedExpenses.sort((a, b) => {
+      filtered.sort((a, b) => {
         const timeA = new Date(a.time);
         const timeB = new Date(b.time);
         return timeB - timeA;
       });
 
-      // Add to existing expenses (newest at top)
-      expenses = [...importedExpenses, ...expenses];
+      const container = document.getElementById("expensesContainer");
+      if (filtered.length === 0) {
+        container.innerHTML = `<div style="text-align:center;padding:40px;background:rgba(0,240,255,0.01);border-radius:20px;border:1px solid rgba(0,240,255,0.03);color: var(--text-secondary);font-size:0.9rem;">🌀 NO EXPENSES YET 🌀</div>`;
+        return;
+      }
+
+      container.innerHTML = "";
+      for (let exp of filtered) {
+        const card = document.createElement("div");
+        card.className = "card";
+        card.innerHTML = `
+          <div class="card-header">
+            <span class="card-amount">₹${parseFloat(exp.amount).toFixed(2)}</span>
+            <span class="card-person"><i class="fas fa-user-astronaut"></i> ${escapeHtml(exp.person)}</span>
+          </div>
+          <div class="card-details">
+            <span><i class="fas fa-pen"></i> ${escapeHtml(exp.note)}</span>
+            <span><i class="fas fa-map-pin"></i> ${escapeHtml(exp.location)}</span>
+          </div>
+          <div style="font-size:clamp(0.6rem, 0.6vw, 0.7rem); color: var(--text-secondary);">📅 ${exp.time || "unknown"}</div>
+          ${exp.image ? `<img src="${exp.image}" class="receipt-thumb" alt="receipt" loading="lazy">` : '<div style="font-size:clamp(0.6rem, 0.6vw, 0.7rem); color: var(--text-secondary);">no receipt</div>'}
+          <div class="card-buttons">
+            <button class="mini-btn edit-btn" data-id="${exp.id}">✏️ EDIT</button>
+            <button class="mini-btn del-btn delete-btn" data-id="${exp.id}">🗑️ DELETE</button>
+          </div>
+        `;
+
+        card.querySelector(".edit-btn").addEventListener("click", (e) => {
+          e.stopPropagation();
+          startEdit(exp.id);
+        });
+        card.querySelector(".delete-btn").addEventListener("click", (e) => {
+          e.stopPropagation();
+          if (confirm("DELETE?")) {
+            expenses = expenses.filter(e => e.id !== exp.id);
+            if (editId === exp.id) editId = null;
+            saveAll();
+          }
+        });
+        card.addEventListener("click", () => openFullDetails(exp));
+        container.appendChild(card);
+      }
+    }
+
+    function startEdit(id) {
+      const exp = expenses.find(e => e.id === id);
+      if (!exp) return;
+      document.getElementById("personName").value = exp.person;
+      document.getElementById("expenseAmount").value = exp.amount;
+      document.getElementById("expenseNote").value = exp.note;
+      document.getElementById("expenseLocation").value = exp.location;
+      if (exp.image) {
+        pendingImage = exp.image;
+        imagePreviewDiv.innerHTML = `<i class="fas fa-check-circle"></i> ✅ Receipt attached`;
+        const img = document.createElement("img");
+        img.src = pendingImage;
+        img.className = "image-preview-img";
+        imagePreviewDiv.appendChild(img);
+      } else {
+        pendingImage = null;
+        imagePreviewDiv.innerHTML = "";
+      }
+      editId = exp.id;
+      document.getElementById("saveBtn").innerHTML = '<i class="fas fa-pen-fancy"></i> UPDATE EXPENSE';
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    async function saveExpense() {
+      if (!currentTrip) {
+        showToast("⚠️ Please create or select a trip first!", true);
+        return;
+      }
+
+      const person = document.getElementById("personName").value.trim();
+      const amount = parseFloat(document.getElementById("expenseAmount").value);
+      const note = document.getElementById("expenseNote").value.trim();
+      const location = document.getElementById("expenseLocation").value.trim();
+
+      if (!person || isNaN(amount) || amount <= 0 || !note || !location) {
+        showToast("⚠️ Fill all fields", true);
+        return;
+      }
+
+      const imageData = pendingImage || null;
+      const now = new Date().toLocaleString();
+
+      if (editId !== null) {
+        const index = expenses.findIndex(e => e.id === editId);
+        if (index !== -1) {
+          expenses[index] = { ...expenses[index], person, amount, note, location, image: imageData, time: now };
+          showToast("✅ Updated!");
+        }
+        editId = null;
+        document.getElementById("saveBtn").innerHTML = '<i class="fas fa-save"></i> SAVE EXPENSE';
+      } else {
+        const newId = Date.now() + Math.random() * 10000;
+        expenses.unshift({ id: newId, person, amount, note, location, image: imageData, time: now });
+        showToast("✅ Expense saved!");
+      }
+
+      document.getElementById("personName").value = "";
+      document.getElementById("expenseAmount").value = "";
+      document.getElementById("expenseNote").value = "";
+      document.getElementById("expenseLocation").value = "";
+      fileInput.value = "";
+      pendingImage = null;
+      imagePreviewDiv.innerHTML = "";
 
       saveAll();
-      showToast(`✅ CSV Imported: ${importedExpenses.length} expenses added (latest first)! Skipped: ${skippedCount}`);
+    }
+
+    // ========== CSV IMPORT ==========
+    function importFromCSV(file) {
+      if (!currentTrip) {
+        showToast("⚠️ Please select a trip first!", true);
+        return;
+      }
+
+      if (file.size > 100 * 1024 * 1024) {
+        showToast("File too large! Max 100MB", true);
+        return;
+      }
+
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        const content = e.target.result;
+        const lines = content.split(/\r?\n/);
+        let importedExpenses = [];
+        let skippedCount = 0;
+
+        for (let i = 0; i < lines.length; i++) {
+          let line = lines[i].trim();
+          if (line === "") continue;
+
+          if (line.toLowerCase().includes("person") && line.toLowerCase().includes("amount") && line.toLowerCase().includes("note")) continue;
+          if (line.startsWith("===")) continue;
+          if (line.startsWith("GRAND")) continue;
+          if (line.startsWith("From")) continue;
+          if (line.startsWith("Total")) continue;
+
+          let parts = [];
+          let inQuote = false;
+          let current = "";
+          for (let ch of line) {
+            if (ch === '"') {
+              inQuote = !inQuote;
+              continue;
+            }
+            if (ch === ',' && !inQuote) {
+              parts.push(current.trim());
+              current = "";
+              continue;
+            }
+            current += ch;
+          }
+          parts.push(current.trim());
+
+          parts = parts.map(p => p.replace(/^"|"$/g, ''));
+
+          if (parts.length < 5) {
+            skippedCount++;
+            continue;
+          }
+
+          let person = parts[0] || "";
+          let amount = parseFloat(parts[1]);
+          let note = parts[2] || "";
+          let location = parts[3] || "";
+          let time = (parts[4] && parts[4].trim() !== "") ? parts[4].trim() : new Date().toLocaleString();
+          let image = (parts.length > 5 && parts[5] && parts[5].trim() !== "") ? parts[5].trim() : null;
+
+          if (!person || isNaN(amount) || amount <= 0 || !note || !location) {
+            skippedCount++;
+            continue;
+          }
+
+          const newId = Date.now() + importedExpenses.length + Math.random() * 10000;
+          importedExpenses.push({
+            id: newId,
+            person: person,
+            amount: amount,
+            note: note,
+            location: location,
+            image: image || null,
+            time: time
+          });
+        }
+
+        importedExpenses.sort((a, b) => {
+          const timeA = new Date(a.time);
+          const timeB = new Date(b.time);
+          return timeB - timeA;
+        });
+
+        expenses = [...importedExpenses, ...expenses];
+        allTrips[currentTrip] = expenses;
+
+        saveAll();
+        showToast(`✅ CSV Imported: ${importedExpenses.length} expenses added! Skipped: ${skippedCount}`);
+      };
+
+      reader.onerror = () => showToast("CSV read error", true);
+      reader.readAsText(file, "UTF-8");
+    }
+
+    // ========== DRAG & DROP ==========
+    const dragDropZone = document.getElementById('dragDropZone');
+    const importBtn = document.getElementById('importCsvBtn');
+    const csvFileInput = document.getElementById('csvImportFile');
+
+    importBtn.addEventListener('click', () => {
+      csvFileInput.click();
+    });
+
+    csvFileInput.addEventListener('change', (e) => {
+      if (e.target.files.length) {
+        importFromCSV(e.target.files[0]);
+      }
+      csvFileInput.value = "";
+    });
+
+    dragDropZone.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      dragDropZone.classList.add('drag-over');
+    });
+
+    dragDropZone.addEventListener('dragleave', (e) => {
+      e.preventDefault();
+      dragDropZone.classList.remove('drag-over');
+    });
+
+    dragDropZone.addEventListener('drop', (e) => {
+      e.preventDefault();
+      dragDropZone.classList.remove('drag-over');
+
+      const files = e.dataTransfer.files;
+      if (files.length > 0) {
+        const file = files[0];
+        if (file.name.endsWith('.csv')) {
+          importFromCSV(file);
+        } else {
+          showToast("⚠️ Please drop a CSV file only!", true);
+        }
+      }
+    });
+
+    // ========== CSV EXPORT ==========
+    function exportCompleteCSV() {
+      if (expenses.length === 0) {
+        showToast("No data to export", true);
+        return;
+      }
+
+      let csvRows = [["Person", "Amount (₹)", "Note", "Location", "Time", "Image"]];
+
+      for (let e of expenses) {
+        let imageData = e.image || "";
+        csvRows.push([
+          `"${e.person.replace(/"/g, '""')}"`,
+          e.amount,
+          `"${e.note.replace(/"/g, '""')}"`,
+          `"${e.location.replace(/"/g, '""')}"`,
+          `"${(e.time || "").replace(/"/g, '""')}"`,
+          `"${imageData.replace(/"/g, '""')}"`
+        ]);
+      }
+
+      csvRows.push([""]);
+      csvRows.push(["=== PERSON WISE TOTALS ==="]);
+      csvRows.push(["Person", "Total Amount (₹)"]);
+      const personTotals = getPersonTotals();
+      let grandTotal = 0;
+      for (let [name, total] of personTotals.entries()) {
+        csvRows.push([`"${name.replace(/"/g, '""')}"`, total.toFixed(2)]);
+        grandTotal += total;
+      }
+      csvRows.push(["GRAND TOTAL", grandTotal.toFixed(2)]);
+
+      csvRows.push([""]);
+      csvRows.push(["=== SETTLEMENT ==="]);
+      csvRows.push(["From (Payer)", "To (Receiver)", "Amount (₹)"]);
+      const settlements = getSettlement();
+      if (settlements.length === 0) {
+        csvRows.push(["ALL SETTLED", "ALL SETTLED", "0"]);
+      } else {
+        for (let s of settlements) {
+          csvRows.push([`"${s.from.replace(/"/g, '""')}"`, `"${s.to.replace(/"/g, '""')}"`, s.amount.toFixed(2)]);
+        }
+      }
+
+      csvRows.push([""]);
+      csvRows.push(["=== SUMMARY ==="]);
+      csvRows.push(["Total Expenses", "Number of People", "Equal Share Per Person"]);
+      const peopleCount = personTotals.size;
+      csvRows.push([grandTotal.toFixed(2), peopleCount, peopleCount > 0 ? (grandTotal / peopleCount).toFixed(2) : 0]);
+
+      const csvContent = csvRows.map(row => row.join(",")).join("\n");
+      const blob = new Blob(["\uFEFF" + csvContent], { type: "text/csv;charset=utf-8;" });
+      const link = document.createElement("a");
+      const url = URL.createObjectURL(blob);
+      link.href = url;
+      link.download = `${currentTrip}_${Date.now()}.csv`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+      showToast(`✅ CSV Exported for "${currentTrip}"!`);
+    }
+
+    function escapeHtml(str) {
+      if (!str) return "";
+      return str.replace(/[&<>]/g, m => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;' }[m]));
+    }
+
+    // ==================== EVENT LISTENERS ====================
+    document.getElementById("saveBtn").addEventListener("click", saveExpense);
+    document.getElementById("exportCsvBtn").addEventListener("click", exportCompleteCSV);
+    document.getElementById("searchInput").addEventListener("input", () => renderExpenses());
+    document.getElementById("closeModalBtn").addEventListener("click", () => {
+      document.getElementById("receiptModal").style.display = "none";
+    });
+    
+    document.getElementById("newTripBtn").addEventListener("click", createNewTrip);
+    document.getElementById("renameTripBtn").addEventListener("click", renameTrip);
+    document.getElementById("deleteTripBtn").addEventListener("click", () => {
+      if (currentTrip) {
+        if (confirm(`⚠️ Delete trip "${currentTrip}" and all its data?\n\nThis action cannot be undone!`)) {
+          deleteTrip(currentTrip);
+        }
+      } else {
+        showToast("⚠️ No trip selected", true);
+      }
+    });
+
+    document.getElementById("tripSelector").addEventListener("change", (e) => {
+      const tripName = e.target.value;
+      if (tripName && allTrips[tripName]) {
+        switchTrip(tripName);
+      }
+    });
+
+    window.onclick = (e) => {
+      const modal = document.getElementById("receiptModal");
+      if (e.target === modal) modal.style.display = "none";
     };
 
-    reader.onerror = () => showToast("CSV read error", true);
-    reader.readAsText(file, "UTF-8");
-  }
-
-  // ========== DRAG & DROP FUNCTIONALITY ==========
-  const dragDropZone = document.getElementById('dragDropZone');
-  const importBtn = document.getElementById('importCsvBtn');
-  const csvFileInput = document.getElementById('csvImportFile');
-
-  // Click on import button triggers file selection
-  importBtn.addEventListener('click', () => {
-    csvFileInput.click();
-  });
-
-  // File selection via input
-  csvFileInput.addEventListener('change', (e) => {
-    if (e.target.files.length) {
-      importFromCSV(e.target.files[0]);
-    }
-    csvFileInput.value = "";
-  });
-
-  // DRAG & DROP EVENT LISTENERS
-  dragDropZone.addEventListener('dragover', (e) => {
-    e.preventDefault();
-    dragDropZone.classList.add('drag-over');
-  });
-
-  dragDropZone.addEventListener('dragleave', (e) => {
-    e.preventDefault();
-    dragDropZone.classList.remove('drag-over');
-  });
-
-  dragDropZone.addEventListener('drop', (e) => {
-    e.preventDefault();
-    dragDropZone.classList.remove('drag-over');
-
-    const files = e.dataTransfer.files;
-    if (files.length > 0) {
-      const file = files[0];
-      if (file.name.endsWith('.csv')) {
-        importFromCSV(file);
-      } else {
-        showToast("⚠️ Please drop a CSV file only!", true);
-      }
-    }
-  });
-
-  // ========== CSV EXPORT with IMAGES ==========
-  function exportCompleteCSV() {
-    if (expenses.length === 0) {
-      showToast("No data to export", true);
-      return;
-    }
-
-    let csvRows = [["Person", "Amount (₹)", "Note", "Location", "Time", "Image"]];
-
-    // Export all expenses with their images
-    for (let e of expenses) {
-      let imageData = e.image || "";
-      // If image is a data URL, keep it as is
-      // If it's too long, we still include it (it will be a very large CSV)
-      csvRows.push([
-        `"${e.person.replace(/"/g, '""')}"`,
-        e.amount,
-        `"${e.note.replace(/"/g, '""')}"`,
-        `"${e.location.replace(/"/g, '""')}"`,
-        `"${(e.time || "").replace(/"/g, '""')}"`,
-        `"${imageData.replace(/"/g, '""')}"`
-      ]);
-    }
-
-    csvRows.push([""]);
-    csvRows.push(["=== PERSON WISE TOTALS ==="]);
-    csvRows.push(["Person", "Total Amount (₹)"]);
-    const personTotals = getPersonTotals();
-    let grandTotal = 0;
-    for (let [name, total] of personTotals.entries()) {
-      csvRows.push([`"${name.replace(/"/g, '""')}"`, total.toFixed(2)]);
-      grandTotal += total;
-    }
-    csvRows.push(["GRAND TOTAL", grandTotal.toFixed(2)]);
-
-    csvRows.push([""]);
-    csvRows.push(["=== SETTLEMENT ==="]);
-    csvRows.push(["From (Payer)", "To (Receiver)", "Amount (₹)"]);
-    const settlements = getSettlement();
-    if (settlements.length === 0) {
-      csvRows.push(["ALL SETTLED", "ALL SETTLED", "0"]);
-    } else {
-      for (let s of settlements) {
-        csvRows.push([`"${s.from.replace(/"/g, '""')}"`, `"${s.to.replace(/"/g, '""')}"`, s.amount.toFixed(2)]);
-      }
-    }
-
-    csvRows.push([""]);
-    csvRows.push(["=== SUMMARY ==="]);
-    csvRows.push(["Total Expenses", "Number of People", "Equal Share Per Person"]);
-    const peopleCount = personTotals.size;
-    csvRows.push([grandTotal.toFixed(2), peopleCount, peopleCount > 0 ? (grandTotal / peopleCount).toFixed(2) : 0]);
-
-    const csvContent = csvRows.map(row => row.join(",")).join("\n");
-    const blob = new Blob(["\uFEFF" + csvContent], { type: "text/csv;charset=utf-8;" });
-    const link = document.createElement("a");
-    const url = URL.createObjectURL(blob);
-    link.href = url;
-    link.download = `expenses_${Date.now()}.csv`;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    URL.revokeObjectURL(url);
-    showToast("✅ CSV Exported with images!");
-  }
-
-  function saveAll() {
-    try {
-      localStorage.setItem("NEON_SPLIT_DATA", JSON.stringify(expenses));
-      renderStats();
-      renderExpenses();
-    } catch(e) {
-      showToast("Storage error! Try clearing old data.", true);
-    }
-  }
-
-  function escapeHtml(str) {
-    if (!str) return "";
-    return str.replace(/[&<>]/g, m => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;' }[m]));
-  }
-
-  // Event listeners
-  document.getElementById("saveBtn").addEventListener("click", saveExpense);
-  document.getElementById("exportCsvBtn").addEventListener("click", exportCompleteCSV);
-  document.getElementById("searchInput").addEventListener("input", () => renderExpenses());
-  document.getElementById("closeModalBtn").addEventListener("click", () => {
-    document.getElementById("receiptModal").style.display = "none";
-  });
-  window.onclick = (e) => {
-    const modal = document.getElementById("receiptModal");
-    if (e.target === modal) modal.style.display = "none";
-  };
-
-  renderStats();
-  renderExpenses();
-  console.log("App ready - Drag & Drop CSV | Latest First | Images included in CSV");
-</script>
+    // ==================== INIT ====================
+    loadAllTrips();
+    console.log("⚡ CYBERSPLIT - Cyberpunk Trip Manager Ready ⚡");
+  </script>
 </body>
 </html>
